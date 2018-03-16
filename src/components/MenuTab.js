@@ -50,9 +50,18 @@ class MenuTab extends React.Component {
                             <TouchableOpacity onPress={this.props.onOptionsButton1}
                                 style={{backgroundColor:COLORS.button, flex:1, borderRadius:10, margin:5, alignItems:'center', justifyContent:'center'}}
                             >
-                                <Text style={{fontFamily:'JordanBoldGrunge', fontSize:30, color:COLORS.fontGray}} >
-                                    { this.props.options[0] }
-                                </Text>
+
+                                {(()=>{ let fontSize // for fontsize resize if 'any'
+                                    if(this.props.options[0] == 'any'){
+                                        fontSize = 24
+                                    } else { fontSize = 30 }
+                                    return (
+                                        <Text style={{fontFamily:'JordanBoldGrunge', fontSize, color:COLORS.fontGray}} >
+                                            { this.props.options[0] }
+                                        </Text>
+                                    )
+                                })()}
+
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -65,9 +74,19 @@ class MenuTab extends React.Component {
                             <TouchableOpacity onPress={this.props.onOptionsButton2}
                                 style={{backgroundColor:COLORS.button, flex:1, borderRadius:10, margin:5, alignItems:'center', justifyContent:'center'}}
                             >
-                                <Text style={{fontFamily:'JordanBoldGrunge', fontSize:25, color:COLORS.fontGray}} >
-                                    {this.props.options[1]}
-                                </Text>
+                                
+
+                                {(()=>{ let fontSize // for fontsize resize if 'any'
+                                    if(this.props.options[1] == 'any'){
+                                        fontSize = 24
+                                    } else { fontSize = 30 }
+                                    return (
+                                        <Text style={{fontFamily:'JordanBoldGrunge', fontSize, color:COLORS.fontGray}} >
+                                            { this.props.options[1] }
+                                        </Text>
+                                    )
+                                })()}
+
                             </TouchableOpacity>
                         </View>
                     </View>

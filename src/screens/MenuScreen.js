@@ -28,7 +28,17 @@ class MenuScreen extends React.Component {
         mp_rowLength: 3,
         mp_timer: 60
     }
-    USERNAME = 'no-name'
+    USERNAME = 'mr-random'
+
+    componentDidMount(){
+        this.props.navigator.push({
+            screen: 'SingleplayerGame',
+            passProps: {
+                numbersLength: this.state.sp_rowLength,
+                timer: this.state.sp_timer
+            }
+        })
+    }
 
     // Moving to Other Screens
     onSettingsPress = ()=>{
@@ -45,9 +55,9 @@ class MenuScreen extends React.Component {
     }
     singleplayer_startGame = ()=>{
         this.props.navigator.push({
-            screen: 'Singleplayer',
+            screen: 'SingleplayerGame',
             passProps: {
-                rowLength: this.state.sp_rowLength,
+                numbersLength: this.state.sp_rowLength,
                 timer: this.state.sp_timer
             }
         })
@@ -72,6 +82,11 @@ class MenuScreen extends React.Component {
     }
     multiplayer_rowLength = ()=>{
         if(this.state.mp_rowLength == 5){
+            this.setState({
+                mp_rowLength: 'any'
+            })
+        } else
+        if(this.state.mp_rowLength == 'any'){
             this.setState({
                 mp_rowLength: 3
             })
