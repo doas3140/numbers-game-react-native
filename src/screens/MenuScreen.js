@@ -33,8 +33,6 @@ class MenuScreen extends React.Component {
     USERNAME = 'mr-random'
 
     componentDidMount(){
-        //test
-        // this.singleplayer_startGame()
     }
 
     multiplayer_startGame = ()=>{
