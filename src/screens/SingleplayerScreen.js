@@ -2,6 +2,7 @@ import React from 'react';
 import { AppRegistry, StyleSheet, FlatList, Text, View, Animated, Image, Easing, TouchableHighlight, Dimensions, TouchableOpacity, Button, ScrollView } from 'react-native';
 import Cube from '../components/Cube'
 import Row from '../components/Row'
+import TimerCountdown from '../components/TimerCountdown'
 import { createAnimation } from '../utils/animations'
 import { CONST, COLORS, width, height } from '../utils/constants'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -174,6 +175,11 @@ class SingleplayerScreen extends React.Component {
         })
     }
 
+    onTimeIsUp = (startTimer)=>{
+        this.newTurn()
+        startTimer()
+    }
+
     render(){
         return (
             <View style={styles.container}>
@@ -186,22 +192,22 @@ class SingleplayerScreen extends React.Component {
                     
                     <View style={styles.headerItem}>
                         <View style={[styles.headerItem,{justifyContent:'flex-end'}]}>
-                        <Icon name='filter-none' size={30} color={COLORS.game.gameWindow} style={{marginLeft:5}} />
+                            <Icon name='filter-none' size={30} color={COLORS.game.gameWindow} style={{marginLeft:5}} />
                         </View>
                         <View style={[styles.headerItem,{justifyContent:'flex-start'}]}>
-                        <Text style={styles.headerNumber}> { this.state.turn } </Text>
+                            <Text style={styles.headerNumber}> { this.state.turn } </Text>
                         </View>
                     </View>
                     <View style={styles.headerItem}>
                         { (()=>{
-                            if(this.state.leftTime != '-'){
+                            if(this.props.timer != '-'){
                                 return (
                                     <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                                         <View style={[styles.headerItem,{justifyContent:'flex-end'}]}>
                                             <Icon name='timer' size={33} color={COLORS.game.gameWindow} />
                                         </View>
                                         <View style={[styles.headerItem,{justifyContent:'flex-start'}]}>
-                                            <Text style={styles.headerNumber}> {this.state.leftTime} </Text>
+                                            <TimerCountdown initialSeconds={this.props.timer} callback={this.onTimeIsUp}/>
                                         </View>
                                     </View>
                                 )

@@ -26,13 +26,16 @@ class MenuScreen extends React.Component {
 
     state = {
         sp_rowLength: 3,
-        sp_timer: '-',
+        sp_timer: 60,
         mp_rowLength: 3,
         mp_timer: 60
     }
     USERNAME = 'mr-random'
 
     componentDidMount(){
+        //test
+        this.singleplayer_startGame()
+
         on('room_was_created',()=>{
             this.props.navigator.showLightBox({
                 screen: 'ReadyModal',

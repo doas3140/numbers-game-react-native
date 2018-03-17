@@ -2,6 +2,7 @@ import React from 'react';
 import { AppRegistry, StyleSheet, FlatList, Text, View, Animated, Image, Easing, TouchableHighlight, Dimensions, TouchableOpacity, Button, ScrollView } from 'react-native';
 import Cube from '../components/Cube'
 import Row from '../components/Row'
+import TimerCountdown from '../components/TimerCountdown'
 import { createAnimation } from '../utils/animations'
 import { CONST, COLORS, width, height } from '../utils/constants'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -46,7 +47,10 @@ class MultiplayerScreen extends React.Component {
     // SOCKET IO FUNCTIONS
     componentDidMount(){
         on('new_turn',(data)=>{
-            this.newTurn(data.next_player)
+            this.setState({
+                currentPlayer: data.next_player
+            })
+            this.newTurn(this.state.currentPlayer)
         })
         on('add_history',(data)=>{
             this.animateRowToHistory({numbers:data.numbers, hints:data.hints})
@@ -202,6 +206,10 @@ class MultiplayerScreen extends React.Component {
         })
     }
 
+    onTimeIsUp = ()=>{
+        emit_numbers(this.USERNAME,this.state.topRow.numbers)
+    }
+
     render(){
         return (
             <View style={styles.container}>
@@ -220,14 +228,21 @@ class MultiplayerScreen extends React.Component {
                     </View>
                     <View style={styles.headerItem}>
                         { (()=>{
-                            if(this.state.leftTime != '-'){
+                            if(this.props.timer != '-'){
                                 return (
                                     <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                                         <View style={[styles.headerItem,{justifyContent:'flex-end'}]}>
                                             <Icon name='timer' size={33} color={COLORS.game.gameWindow} />
                                         </View>
                                         <View style={[styles.headerItem,{justifyContent:'flex-start'}]}>
-                                            <Text style={styles.headerNumber}> {this.state.leftTime} </Text>
+
+                                            { (()=>{
+                                                if(this.state.currentPlayer == this.USERNAME){
+                                                    return <TimerCountdown initialSeconds={this.props.timer} callback={this.onTimeIsUp}/>
+                                                } else {
+                                                    return <Text style={styles.headerNumber}> {this.props.timer} </Text>
+                                                }
+                                            })() }
                                         </View>
                                     </View>
                                 )
