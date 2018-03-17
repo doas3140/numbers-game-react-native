@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         flex: 1,
-        backgroundColor: 'purple',
+        backgroundColor: COLORS.header,
         alignItems: 'center'
     },
     body: {

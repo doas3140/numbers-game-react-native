@@ -14,7 +14,8 @@ export const CONST = {
     HINT_COLOR: '#ccb100',
 
     FIRST_ROW_APPEAR_DURATION: 1000,
-    ROW_SLIDE_DOWN_DURATION: 300
+    ROW_SLIDE_DOWN_DURATION: 300,
+    READY_MODAL_LIFETIME: 10000
 }
 
 export const COLORS = {
@@ -27,6 +28,7 @@ export const COLORS = {
     fontGray: '#455a64',
     button: '#ffd740',
     settingsBg: '#f57f17',
+    header: 'purple',
     game: {
         bg: '#004d40',
         gameWindow: '#efebe9',

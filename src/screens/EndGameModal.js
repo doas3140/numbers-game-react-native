@@ -11,25 +11,23 @@ class EndGameModal extends React.Component {
     }
 
     state = {
-        animVal1: new Animated.Value(0),
-        animVal2: new Animated.Value(0),
-        animVal3: new Animated.Value(0),
-        animVal4: new Animated.Value(0)
+        animVal1: new Animated.Value(0), // gg text
+        animVal2: new Animated.Value(0), // turn text
+        animVal3: new Animated.Value(0), // button left
+        animVal4: new Animated.Value(0), // button right
+        animVal5: new Animated.Value(0), // username
     }
 
-    //
     interVal1 = this.state.animVal1.interpolate({ inputRange: [0,1],
         outputRange: [0, 200] }) // starts at -100
-    //
     interVal2 = this.state.animVal2.interpolate({ inputRange: [0,1],
         outputRange: [0, 300] }) // starts at -100
-    //
     interVal3 = this.state.animVal3.interpolate({ inputRange: [0,1],
         outputRange: [0, 300] }) // starts at -100
-    //
     interVal4 = this.state.animVal4.interpolate({ inputRange: [0,1],
         outputRange: [0, -300] }) // starts at -100
-
+    interVal5 = this.state.animVal5.interpolate({ inputRange: [0,1],
+        outputRange: [0, 500] }) // starts at -100
 
     componentDidMount(){
         // First animation
@@ -37,13 +35,15 @@ class EndGameModal extends React.Component {
         this.state.animVal2.setValue(0)
         this.state.animVal3.setValue(0)
         this.state.animVal4.setValue(0)
+        this.state.animVal5.setValue(0)
         
         anim1 = createAnimation(Value=this.state.animVal1, duration=1000, easing=Easing.bounce, delay=500)
         anim2 = createAnimation(Value=this.state.animVal2, duration=300, easing=Easing.ease)
         anim3 = createAnimation(Value=this.state.animVal3, duration=700, easing=Easing.bounce)
         anim4 = createAnimation(Value=this.state.animVal4, duration=700, easing=Easing.bounce)
+        anim5 = createAnimation(Value=this.state.animVal5, duration=300, easing=Easing.ease)
         
-        Animated.sequence([anim1,anim2,anim3,anim4]).start()
+        Animated.sequence([anim1,anim2,anim5,anim3,anim4]).start()
     }
 
     exit = ()=>{
@@ -69,6 +69,18 @@ class EndGameModal extends React.Component {
                 }]}>
                     TURNS: {this.props.turn}
                 </Animated.Text>
+                
+                {(()=>{
+                    if(this.props.username){
+                        return (
+                            <Animated.Text style={[styles.usernameText,{
+                                transform: [ { translateX: this.interVal5 } ]
+                            }]}>
+                                {this.props.username} WON
+                            </Animated.Text>
+                        )
+                    } else { return null }
+                })()}
 
                 <Animated.View style={[styles.btn1,{
                     transform: [ { translateX: this.interVal3 } ]
@@ -101,7 +113,7 @@ const styles = StyleSheet.create({
     },
     btn1: {
         position: 'absolute',
-        top: 250,
+        top: 300,
         left: width/2 - 80 - 20 - 300, // first nr - width, second - marginRight, third - offset
         height: 60,
         width: 80,
@@ -112,7 +124,7 @@ const styles = StyleSheet.create({
     },
     btn2: {
         position: 'absolute',
-        top: 250,
+        top: 300,
         right: width/2 - 80 - 20 - 300, // first nr - width, second - marginLeft, third - offset
         height: 60,
         width: 80,
@@ -130,10 +142,18 @@ const styles = StyleSheet.create({
     },
     turnText: {
         position: 'absolute',
-        top: 180,
+        top: 230,
         left: width/2 - 160/2 - 300, // first nr - width, second - offset
         // left: -170,
         color: COLORS.button,
+        fontFamily: 'JordanBoldGrunge',
+        fontSize: 40,
+    },
+    usernameText: {
+        position: 'absolute',
+        top: 175,
+        left: width/2 - 300/2 - 500, // first nr - width, second - offset
+        color: COLORS.c3,
         fontFamily: 'JordanBoldGrunge',
         fontSize: 40,
     }

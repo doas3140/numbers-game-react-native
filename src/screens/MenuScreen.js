@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import MenuTab from '../components/MenuTab'
-import { COLORS } from '../utils/constants'
+import { COLORS, CONST } from '../utils/constants'
+import { socket, emit_info, emit_find_game, emit_ready_to_play, on } from '../utils/socket_io.js'
 
 class MenuScreen extends React.Component {
     /* PROPS
@@ -15,8 +16,9 @@ class MenuScreen extends React.Component {
     mp_timer: 60
     
     /* VARIABLES
-    
-    */ 
+    socket
+
+    */
 
     static navigatorStyle = {
         navBarHidden: true
@@ -31,6 +33,28 @@ class MenuScreen extends React.Component {
     USERNAME = 'mr-random'
 
     componentDidMount(){
+        on('room_was_created',()=>{
+            this.props.navigator.showLightBox({
+                screen: 'ReadyModal',
+                passProps: {
+                    startGame: this.multiplayer_startGame,
+                    username: this.USERNAME
+                }
+            })
+        })
+    }
+
+    multiplayer_startGame = ()=>{
+        this.props.navigator.push({
+            screen: 'MultiplayerGame',
+            passProps: {
+                numbersLength: this.state.mp_rowLength,
+                timer: this.state.mp_timer,
+                username: this.USERNAME
+            }
+        })
+    }
+    singleplayer_startGame = ()=>{
         this.props.navigator.push({
             screen: 'SingleplayerGame',
             passProps: {
@@ -53,17 +77,11 @@ class MenuScreen extends React.Component {
             }
         })
     }
-    singleplayer_startGame = ()=>{
-        this.props.navigator.push({
-            screen: 'SingleplayerGame',
-            passProps: {
-                numbersLength: this.state.sp_rowLength,
-                timer: this.state.sp_timer
-            }
-        })
-    }
     multiplayer_findGame = ()=>{
-        console.log('mp find')
+        emit_info(this.USERNAME) // nereiks veliau, nes ir taip visada siusim userio name
+        setTimeout(()=>{ //nereiks veliau 
+            emit_find_game(this.USERNAME,this.state.mp_rowLength,this.state.mp_timer)
+        },2000) //nereiks veliau
     }
     // Option Button Actions
     singleplayer_rowLength = ()=>{
