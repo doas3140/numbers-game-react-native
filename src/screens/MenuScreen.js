@@ -26,7 +26,7 @@ class MenuScreen extends React.Component {
 
     state = {
         sp_rowLength: 3,
-        sp_timer: 60,
+        sp_timer: '-',
         mp_rowLength: 3,
         mp_timer: 60
     }
@@ -34,17 +34,7 @@ class MenuScreen extends React.Component {
 
     componentDidMount(){
         //test
-        this.singleplayer_startGame()
-
-        on('room_was_created',()=>{
-            this.props.navigator.showLightBox({
-                screen: 'ReadyModal',
-                passProps: {
-                    startGame: this.multiplayer_startGame,
-                    username: this.USERNAME
-                }
-            })
-        })
+        // this.singleplayer_startGame()
     }
 
     multiplayer_startGame = ()=>{
@@ -83,9 +73,30 @@ class MenuScreen extends React.Component {
     multiplayer_findGame = ()=>{
         emit_info(this.USERNAME) // nereiks veliau, nes ir taip visada siusim userio name
         setTimeout(()=>{ //nereiks veliau 
-            emit_find_game(this.USERNAME,this.state.mp_rowLength,this.state.mp_timer)
+            this.props.navigator.showLightBox({
+                screen:'FindingGame',
+                style:{
+                    tapBackgroundToDismiss: true,
+                    backgroundBlur: 'dark',
+                    username: this.USERNAME,
+                    numbersLength: this.mp_rowLength,
+                    timer: this.mp_timer,
+                    callback: this.showReadyModal
+                }
+            })
         },2000) //nereiks veliau
     }
+
+    showReadyModal = ()=>{
+        this.props.navigator.showLightBox({
+            screen: 'ReadyModal',
+            passProps: {
+                startGame: this.multiplayer_startGame,
+                username: this.USERNAME
+            }
+        })
+    }
+
     // Option Button Actions
     singleplayer_rowLength = ()=>{
         if(this.state.sp_rowLength == 5){
