@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Button, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { COLORS, width, height, CONST } from '../utils/constants'
-import { on, emit_ready_to_play } from '../utils/socket_io'
+import { on, off, emit_find_game } from '../utils/socket_io'
 
 class FindingGameIndicator extends React.Component {
 
@@ -10,10 +10,27 @@ class FindingGameIndicator extends React.Component {
     }
 
     componentDidMount(){
-        emit_find_game(this.props.username,this.props.numbersLength,this.props.timer)
+        emit_find_game(this.props.username,this.props.user_count)
         on('room_was_created',()=>{
+            setTimeout(()=>{
+                this.showReadyModal()
+            },1000)
             this.props.navigator.dismissLightBox()
-            callback()
+        })
+    }
+
+    componentWillUnmount(){
+        off('room_was_created')
+    }
+
+    showReadyModal = ()=>{
+        this.props.navigator.showLightBox({
+            screen: 'ReadyModal',
+            passProps: {
+                startGame: this.multiplayer_startGame,
+                username: this.props.username,
+                startGame: this.props.startGame,
+            }
         })
     }
 

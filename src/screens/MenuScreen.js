@@ -27,12 +27,15 @@ class MenuScreen extends React.Component {
     state = {
         sp_rowLength: 3,
         sp_timer: '-',
-        mp_rowLength: 3,
-        mp_timer: 60
+        sp_userCount: 1,
+        mp_rowLength: 4,
+        mp_timer: 60,
+        mp_userCount: 2
     }
     USERNAME = 'mr-random'
 
     componentDidMount(){
+        emit_info(this.USERNAME)
     }
 
     multiplayer_startGame = ()=>{
@@ -69,20 +72,18 @@ class MenuScreen extends React.Component {
         })
     }
     multiplayer_findGame = ()=>{
-        emit_info(this.USERNAME) // nereiks veliau, nes ir taip visada siusim userio name
-        setTimeout(()=>{ //nereiks veliau 
-            this.props.navigator.showLightBox({
-                screen:'FindingGame',
-                style:{
-                    tapBackgroundToDismiss: true,
-                    backgroundBlur: 'dark',
-                    username: this.USERNAME,
-                    numbersLength: this.mp_rowLength,
-                    timer: this.mp_timer,
-                    callback: this.showReadyModal
-                }
-            })
-        },2000) //nereiks veliau
+        this.props.navigator.showLightBox({
+            screen:'FindingGame',
+            style: {
+                tapBackgroundToDismiss: true,
+                backgroundBlur: 'dark'
+            },
+            passProps: {
+                username: this.USERNAME,
+                user_count: 2,
+                startGame: this.multiplayer_startGame   
+            }
+        })
     }
 
     showReadyModal = ()=>{
@@ -107,49 +108,46 @@ class MenuScreen extends React.Component {
             })
         }
     }
-    singleplayer_timer = ()=>{
-        alert('Timer in singleplayer is unavailable')
+    singleplayer_userCount = ()=>{
+        //
     }
     multiplayer_rowLength = ()=>{
-        if(this.state.mp_rowLength == 5){
-            this.setState({
-                mp_rowLength: 'any'
-            })
-        } else
-        if(this.state.mp_rowLength == 'any'){
-            this.setState({
-                mp_rowLength: 3
-            })
-        } else {
-            this.setState({
-                mp_rowLength: this.state.mp_rowLength+1
-            })
-        }
+        // if(this.state.mp_rowLength == 5){
+        //     this.setState({
+        //         mp_rowLength: 'any'
+        //     })
+        // } else
+        // if(this.state.mp_rowLength == 'any'){
+        //     this.setState({
+        //         mp_rowLength: 3
+        //     })
+        // } else {
+        //     this.setState({
+        //         mp_rowLength: this.state.mp_rowLength+1
+        //     })
+        // }
+        alert('For now only 4 rows are available in multiplayer mode.')
     }
-    multiplayer_timer = ()=>{
-        if(this.state.mp_timer == 'any'){
+    multiplayer_userCount = ()=>{
+        if(this.state.mp_userCount == 'any'){
             this.setState({
-                mp_timer: '-'
+                mp_userCount: 2
             })
         } else
-        if(this.state.mp_timer == '-'){
+        if(this.state.mp_userCount == 4){
             this.setState({
-                mp_timer: 30
-            })
-        } else
-        if(this.state.mp_timer == 90){
-            this.setState({
-                mp_timer: 'any'
+                mp_userCount: 'any'
             })
         } else {
             this.setState({
-                mp_timer: this.state.mp_timer+30
+                mp_userCount: this.state.mp_userCount+1
             })
         }
     }
     // change username
     changeUsername = (username)=>{
         this.USERNAME = username
+        emit_info(this.USERNAME)
         // all to lower case!
         console.log('New name - ', this.USERNAME)
     }
@@ -166,11 +164,11 @@ class MenuScreen extends React.Component {
                 </View>
 
                 <View style={styles.singleplayer}>
-                    <MenuTab title={'singleplayer'} buttonTitle={'start game'} options={[this.state.sp_rowLength,this.state.sp_timer]} onMainButton={this.singleplayer_startGame} onOptionsButton1={this.singleplayer_rowLength} onOptionsButton2={this.singleplayer_timer} />
+                    <MenuTab title={'singleplayer'} buttonTitle={'start game'} options={[this.state.sp_rowLength,this.state.sp_userCount]} onMainButton={this.singleplayer_startGame} onOptionsButton1={this.singleplayer_rowLength} onOptionsButton2={this.singleplayer_userCount} />
                 </View>
 
                 <View style={styles.multiplayer}>
-                    <MenuTab title={'multiplayer'} buttonTitle={'find game'} options={[this.state.mp_rowLength,this.state.mp_timer]}  onMainButton={this.multiplayer_findGame} onOptionsButton1={this.multiplayer_rowLength} onOptionsButton2={this.multiplayer_timer}/>
+                    <MenuTab title={'multiplayer'} buttonTitle={'find game'} options={[this.state.mp_rowLength,this.state.mp_userCount]}  onMainButton={this.multiplayer_findGame} onOptionsButton1={this.multiplayer_rowLength} onOptionsButton2={this.multiplayer_userCount}/>
                 </View>
                 
                 <View style={styles.nothing} />

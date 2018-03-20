@@ -19,18 +19,22 @@ class TimerCountdown extends React.Component {
     }
     timeoutId = null
     uniqueId = this.props.uniqueId
+    mounted = false
 
     componentDidMount(){
+        this.mounted = true
         this.tick()
     }
     componentWillUnmount(){
+        this.mounted = false
         clearTimeout(this.state.timeoutId)
     }
 
     tick = ()=>{
         if(this.state.secondsRemaining != 0){
             this.timeoutId = setTimeout(()=>{
-                this.setState({ secondsRemaining: this.state.secondsRemaining-1 })
+                if(this.mounted){
+                this.setState({secondsRemaining: this.state.secondsRemaining-1}) }
                 this.tick()
             }, 1000)
         } else { setTimeout(()=>{this.onEnd()},500) }

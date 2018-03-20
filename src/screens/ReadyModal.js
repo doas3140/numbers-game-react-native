@@ -15,7 +15,7 @@ class ReadyModal extends React.Component {
 
     componentDidMount(){
         setTimeout(()=>{
-            this.gameWasntCreated()
+            this.notInTime()
         }, CONST.READY_MODAL_LIFETIME)
 
         on('start_game',()=>{
@@ -24,7 +24,7 @@ class ReadyModal extends React.Component {
         })
     }
 
-    gameWasntCreated = ()=>{
+    notInTime = ()=>{
         this.props.navigator.dismissLightBox()
     }
 

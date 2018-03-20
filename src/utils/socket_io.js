@@ -7,10 +7,10 @@ export const emit_info = (username)=>{ // nebereiks veliau, nes siusim viska per
     socket.emit('')
 }
 
-export const emit_find_game = (username, rowLength, timer)=>{
+export const emit_find_game = (username, user_count)=>{
     //rowLength can be: 'any','3','4','5'
     //timer can be:     'any','30','60','90','-' ('-' = no limit)
-    socket.emit('find_game', {username, rowLength, timer})
+    socket.emit('find_game', {username, user_count})
     socket.emit('')
 }
 
@@ -26,4 +26,9 @@ export const emit_numbers = (username, numbers)=>{
 
 export const on = (socket_name, callback)=>{
     socket.on(socket_name, callback)
+}
+
+export const off = (socket_name)=>{
+    socket.off(socket_name)
+    console.log('not listening to: ', socket_name)
 }

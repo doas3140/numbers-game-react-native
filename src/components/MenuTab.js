@@ -68,7 +68,7 @@ class MenuTab extends React.Component {
 
                     <View style={{backgroundColor:COLORS.c3, flex:1, flexDirection:'row'}}>
                         <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-                        <Icon name='timelapse' size={40} color={COLORS.fontGray}/>
+                        <Icon name='people' size={40} color={COLORS.fontGray}/>
                         </View>
                         <View style={{flex:1}}>
                             <TouchableOpacity onPress={this.props.onOptionsButton2}
