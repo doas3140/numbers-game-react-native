@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import MenuTab from '../components/MenuTab'
 import { COLORS, CONST } from '../utils/constants'
-import { socket, emit_info, emit_find_game, emit_ready_to_play, on } from '../utils/socket_io.js'
+import { socket, emit_info, emit_find_game, emit_ready_to_play, on, off } from '../utils/socket_io.js'
 
 class MenuScreen extends React.Component {
     /* PROPS
@@ -33,9 +33,12 @@ class MenuScreen extends React.Component {
         mp_userCount: 2
     }
     USERNAME = 'mr-random'
+    CONNECTED = true
 
     componentDidMount(){
-        emit_info(this.USERNAME)
+        on('connect_error',     ()=>{this.CONNECTED=false; console.log(false)})
+        on('reconnect_error',   ()=>{this.CONNECTED=false; console.log(false)})
+        on('reconnect',         ()=>{this.CONNECTED=true;  console.log(true)})
     }
 
     multiplayer_startGame = ()=>{
@@ -72,6 +75,27 @@ class MenuScreen extends React.Component {
         })
     }
     multiplayer_findGame = ()=>{
+        if(this.CONNECTED){
+            emit_info(this.USERNAME)
+            on('emit_info_res', (data)=>{
+                console.log('Name is allowed:', data.name_allowed)
+                off('emit_info_res')
+                if(data.name_allowed){
+                    this.showFindingGame()
+                } else {
+                    this.nameIsNotAllowed(this.USERNAME)
+                }
+            })
+        } else {
+            alert("Can't connect to server...")
+        }
+    }
+
+    nameIsNotAllowed = (name)=>{
+        alert('"'+name+'" name is currently in use')
+    }
+
+    showFindingGame = ()=>{
         this.props.navigator.showLightBox({
             screen:'FindingGame',
             style: {
@@ -80,7 +104,7 @@ class MenuScreen extends React.Component {
             },
             passProps: {
                 username: this.USERNAME,
-                user_count: 2,
+                user_count: this.state.mp_userCount,
                 startGame: this.multiplayer_startGame   
             }
         })
@@ -147,8 +171,6 @@ class MenuScreen extends React.Component {
     // change username
     changeUsername = (username)=>{
         this.USERNAME = username
-        emit_info(this.USERNAME)
-        // all to lower case!
         console.log('New name - ', this.USERNAME)
     }
  

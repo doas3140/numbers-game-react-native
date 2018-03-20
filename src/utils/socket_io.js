@@ -1,6 +1,9 @@
 import io from 'socket.io-client'
 
-export const socket = io('http://192.168.1.131:8888/')
+export const socket = io('http://192.168.1.131:8888/', {
+    // 'connect_timeout': 5000,
+    'timeout': 6000
+})
 
 export const emit_info = (username)=>{ // nebereiks veliau, nes siusim viska per username
     socket.emit('user_info', {username})
@@ -8,9 +11,13 @@ export const emit_info = (username)=>{ // nebereiks veliau, nes siusim viska per
 }
 
 export const emit_find_game = (username, user_count)=>{
-    //rowLength can be: 'any','3','4','5'
-    //timer can be:     'any','30','60','90','-' ('-' = no limit)
+    //user_count can be: 'any','3','4','2'
     socket.emit('find_game', {username, user_count})
+    socket.emit('')
+}
+
+export const emit_cancel_find = (username)=>{
+    socket.emit('cancel_find_game', {username})
     socket.emit('')
 }
 
