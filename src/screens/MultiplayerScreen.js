@@ -8,7 +8,7 @@ import { CONST, COLORS, width, height } from '../utils/constants'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import WaitingPlayerOverlay from '../components/WaitingPlayerOverlay'
-import { socket, emit_numbers, on } from '../utils/socket_io.js'
+import { socket, emit_numbers, on, off } from '../utils/socket_io.js'
 
 class MultiplayerScreen extends React.Component {
     /* PROPS
@@ -55,6 +55,11 @@ class MultiplayerScreen extends React.Component {
         on('add_history',(data)=>{
             this.animateRowToHistory({numbers:data.numbers, hints:data.hints})
         })
+    }
+
+    componentWillUnmount(){
+        off('new_turn')
+        off('add_history')
     }
 
     // SET STATES

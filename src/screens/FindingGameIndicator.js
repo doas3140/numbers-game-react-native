@@ -13,7 +13,9 @@ class FindingGameIndicator extends React.Component {
         emit_find_game(this.props.username,this.props.user_count)
         on('room_was_created',()=>{
             this.props.navigator.dismissLightBox()
-            this.showReadyModal()
+            setTimeout(()=>{
+                this.showReadyModal()
+            },500)
         })
     }
 

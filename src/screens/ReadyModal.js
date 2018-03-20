@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Button, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { COLORS, width, height, CONST } from '../utils/constants'
-import { on, emit_ready_to_play } from '../utils/socket_io'
+import { on, off, emit_ready_to_play } from '../utils/socket_io'
 
 class ReadyModal extends React.Component {
 
@@ -22,6 +22,10 @@ class ReadyModal extends React.Component {
             this.props.navigator.dismissModal()
             this.props.startGame()
         })
+    }
+
+    componentWillUnmount(){
+        off('start_game')
     }
 
     notInTime = ()=>{

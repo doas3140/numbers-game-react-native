@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 
-export const socket = io('http://192.168.1.131:8888/', {
+export const socket = io('http://193.219.91.103:4887/', {
     // 'connect_timeout': 5000,
     'timeout': 6000
 })
