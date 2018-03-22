@@ -32,7 +32,7 @@ class MenuScreen extends React.Component {
         mp_timer: 60,
         mp_userCount: 2
     }
-    USERNAME = 'mr-random'
+    USERNAME = 'mister'
     CONNECTED = true
 
     componentDidMount(){
@@ -99,7 +99,6 @@ class MenuScreen extends React.Component {
         this.props.navigator.showLightBox({
             screen:'FindingGame',
             style: {
-                tapBackgroundToDismiss: true,
                 backgroundBlur: 'dark'
             },
             passProps: {

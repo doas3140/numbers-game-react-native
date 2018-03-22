@@ -21,5 +21,9 @@ Navigation.registerComponent('FindingGame', ()=>FindingGameIndicator)
 Navigation.startSingleScreenApp({
   screen: {
     screen: 'Menu'
-  }
+  },
+  appStyle: {
+    orientation: 'portrait'
+  },
+  animationType:'slide-down'
 })

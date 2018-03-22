@@ -43,6 +43,7 @@ class MultiplayerScreen extends React.Component {
 
     // VARIABLES
     USERNAME = this.props.username
+    GOAL_NR = [0,0,0,0]
 
     // SOCKET IO FUNCTIONS
     componentDidMount(){
@@ -166,8 +167,13 @@ class MultiplayerScreen extends React.Component {
 
     checkForEndGame = (hints)=>{
         if(hints[1] == this.props.numbersLength){
+            this.GOAL_NR = this.state.history[0].numbers
             this.GAME_OVER = true
-            this.endGame(this.state.currentPlayer)
+            if(this.state.currentPlayer=='Server'){
+                this.endGame(this.USERNAME)
+            } else {
+                this.endGame(this.state.currentPlayer)
+            }
         }
     }
 
@@ -309,8 +315,18 @@ class MultiplayerScreen extends React.Component {
                     </Animated.View>
                 
                 </View>
-
-                <WaitingPlayerOverlay modalVisible={this.state.waitingForOthers} username={this.state.currentPlayer}/>
+                
+                { (()=>{
+                    if(this.GAME_OVER){
+                        return (
+                            null
+                        )
+                    } else {
+                        return (
+                            <WaitingPlayerOverlay modalVisible={this.state.waitingForOthers} username={this.state.currentPlayer}/>
+                        )
+                    }
+                })() }
 
             </View>
         )

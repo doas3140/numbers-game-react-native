@@ -21,7 +21,13 @@ class FindingGameIndicator extends React.Component {
 
     componentWillUnmount(){
         off('room_was_created')
+    }
+
+    forceClose = ()=>{
         emit_cancel_find(this.props.username)
+        setTimeout(()=>{
+            this.props.navigator.dismissLightBox()
+        },100)
     }
 
     showReadyModal = ()=>{
@@ -37,17 +43,19 @@ class FindingGameIndicator extends React.Component {
 
     render(){
         return (
-            <View style={styles.modal}>
-                <View style={styles.header}>
-                    <Text style={[styles.text,{fontSize:24, color: 'white'}]}>
-                        looking for game...
-                    </Text>
-                    <ActivityIndicator 
-                        size = 'large'
-                        color = 'white'
-                    />
+            <TouchableOpacity style={styles.container} onPress={this.forceClose}>
+                <View style={styles.modal}>
+                    <View style={styles.header}>
+                        <Text style={[styles.text,{fontSize:24, color: 'white'}]}>
+                            looking for game...
+                        </Text>
+                        <ActivityIndicator 
+                            size = 'large'
+                            color = 'white'
+                        />
+                    </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 }
@@ -59,6 +67,12 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.c1,
         borderRadius: 5,
         marginBottom: 100,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    container: {
+        flex:1,
+        flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'center'
     },
