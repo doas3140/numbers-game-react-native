@@ -28,6 +28,7 @@ export const COLORS = {
     fontGray: '#455a64',
     button: '#ffd740',
     settingsBg: '#f57f17',
+    helpBg: '#41545C',
     header: 'purple',
     game: {
         bg: '#004d40',

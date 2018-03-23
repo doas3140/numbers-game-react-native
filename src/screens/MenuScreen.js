@@ -74,6 +74,16 @@ class MenuScreen extends React.Component {
             }
         })
     }
+
+    onHelpPress = ()=>{
+        this.props.navigator.showModal({
+            screen: 'Help',
+            style: {
+                backgroundBlur: 'dark'
+            }
+        })
+    }
+
     multiplayer_findGame = ()=>{
         if(this.CONNECTED){
             emit_info(this.USERNAME)
@@ -109,15 +119,15 @@ class MenuScreen extends React.Component {
         })
     }
 
-    showReadyModal = ()=>{
-        this.props.navigator.showLightBox({
-            screen: 'ReadyModal',
-            passProps: {
-                startGame: this.multiplayer_startGame,
-                username: this.USERNAME
-            }
-        })
-    }
+    // showReadyModal = ()=>{
+    //     this.props.navigator.showLightBox({
+    //         screen: 'ReadyModal',
+    //         passProps: {
+    //             startGame: this.multiplayer_startGame,
+    //             username: this.USERNAME
+    //         }
+    //     })
+    // }
 
     // Option Button Actions
     singleplayer_rowLength = ()=>{
@@ -196,7 +206,13 @@ class MenuScreen extends React.Component {
                 <View style={styles.nothing} />
                 <View style={styles.nothing} />
 
-                <View style={styles.settings}>
+                <View style={[styles.settings,{right:0}]}>
+                    <TouchableOpacity onPress={this.onHelpPress}>
+                        <Icon name='help' size={40} color={COLORS.fontGray}/>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={[styles.settings,{left:0}]}>
                     <TouchableOpacity onPress={this.onSettingsPress}>
                         <Icon name='settings' size={40} color={COLORS.fontGray}/>
                     </TouchableOpacity>
@@ -215,7 +231,7 @@ const styles = StyleSheet.create({
     settings: {
         position: 'absolute',
         // backgroundColor: 'green',
-        right: 0,
+        // right: 0,
         top: 0,
         height: 70,
         width: 70,
