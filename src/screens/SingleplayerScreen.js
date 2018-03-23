@@ -180,14 +180,20 @@ class SingleplayerScreen extends React.Component {
         startTimer()
     }
 
+    showHelp = ()=>{
+        this.props.navigator.showModal({
+            screen: 'Help'
+        })
+    }
+
     render(){
         return (
             <View style={styles.container}>
                 
                 <View style={styles.header}>
 
-                    <TouchableOpacity style={[styles.headerItem,{flex:1,justifyContent:'flex-start', marginLeft:8}]}>
-                        <Icon name='arrow-back' size={40} color={COLORS.game.gameWindow} onPress={this.exit} />
+                    <TouchableOpacity onPress={this.exit} style={[styles.headerItem,{flex:1,justifyContent:'flex-start', marginLeft:8}]}>
+                        <Icon name='arrow-back' size={40} color={COLORS.game.gameWindow}/>
                     </TouchableOpacity>
                     
                     <View style={styles.headerItem}>
@@ -217,7 +223,7 @@ class SingleplayerScreen extends React.Component {
                         })() }
                     </View>
                     
-                    <TouchableOpacity style={[styles.headerItem,{flex:1}]}>
+                    <TouchableOpacity onPress={this.showHelp} style={[styles.headerItem,{flex:1}]}>
                         <Icon name='help-outline' size={35} color={COLORS.game.gameWindow} />
                     </TouchableOpacity>
                 </View>

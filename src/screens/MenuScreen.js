@@ -77,10 +77,7 @@ class MenuScreen extends React.Component {
 
     onHelpPress = ()=>{
         this.props.navigator.showModal({
-            screen: 'Help',
-            style: {
-                backgroundBlur: 'dark'
-            }
+            screen: 'Help'
         })
     }
 
@@ -106,11 +103,8 @@ class MenuScreen extends React.Component {
     }
 
     showFindingGame = ()=>{
-        this.props.navigator.showLightBox({
+        this.props.navigator.showModal({
             screen:'FindingGame',
-            style: {
-                backgroundBlur: 'dark'
-            },
             passProps: {
                 username: this.USERNAME,
                 user_count: this.state.mp_userCount,
