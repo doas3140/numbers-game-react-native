@@ -1,7 +1,7 @@
 import React from 'react'
 import { AppRegistry, StyleSheet, FlatList, Text, View, Animated, Image, Easing, TouchableHighlight, Dimensions, Button, TouchableOpacity } from 'react-native'
 import Cube from './Cube'
-import { CONST, COLORS } from '../utils/constants'
+import { CONST, COLORS, FONTS, COLORS2, SIZES } from '../utils/constants'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 class Row extends React.Component {
@@ -11,7 +11,8 @@ class Row extends React.Component {
     button (boolean)
     onButtonPress (function) = onPress button
     onNumberPressCallback (function(index,number)) = callback when individual number is pressed
-    
+    onNumberLongPressCallback
+
     /* STATES
     None
     
@@ -45,7 +46,7 @@ class Row extends React.Component {
                     data = {this.cubesArr}
                     extraData = {this.cubesArr}
                     renderItem = {({item})=>{
-                        return <Cube key={item.key} index={item.key} number={item.row.numbers[item.key]} row_numbers={item.row.numbers} touchable={this.props.button} onNumberPressCallback={this.props.onNumberPressCallback} />
+                        return <Cube key={item.key} index={item.key} number={item.row.numbers[item.key]} row_numbers={item.row.numbers} touchable={this.props.button} onNumberPressCallback={this.props.onNumberPressCallback} onNumberLongPressCallback={this.props.onNumberLongPressCallback} />
                     }}
             />
         )
@@ -63,7 +64,7 @@ class Row extends React.Component {
         if(this.props.button && !this.row.hints){
             return (
                 <TouchableOpacity onPress={this.props.onButtonPress} style={styles.btn}>
-                    <Icon name='arrow-drop-down' size={65} style={{marginTop:0}} />
+                    <Icon name='arrow-drop-down' size={FONTS.row.icon_arrow_bottom} style={{marginTop:0}} />
                 </TouchableOpacity>
             )
         } else {
@@ -94,40 +95,39 @@ class Row extends React.Component {
 const styles = StyleSheet.create({
     row: {
         // flex: 1,
-        flexDirection: 'row',
-        backgroundColor: '#666'
+        flexDirection: 'row'
     },
     leftSide: {
         // flexDirection: 'row',
         flex: 4, // overrided in component class by props.numbersLength
-        backgroundColor: COLORS.game.numbersBg
+        backgroundColor: COLORS2.row.leftPart.background
     },
     rightSide: {
         flex: 2, // 2 cubes
-        backgroundColor: COLORS.game.hintsBg,
+        backgroundColor: COLORS2.row.rightPart.background,
         alignItems: 'center'
     },
     btn: {
-        margin: CONST.CUBE_MARGIN,
-        width: CONST.CUBE_SIZE*2 - CONST.CUBE_MARGIN*2, 
-        height: CONST.CUBE_SIZE - CONST.CUBE_MARGIN*2, 
-        backgroundColor: COLORS.game.button,
+        margin: SIZES.row.button.margin,
+        width: SIZES.row.button.width, 
+        height: SIZES.row.button.height, 
+        backgroundColor: COLORS2.row.rightPart.button_bg,
         alignItems: 'center',
         justifyContent: 'center'
     },
     hint1: {
-        width: CONST.CUBE_SIZE - CONST.CUBE_MARGIN*1.5,
-        marginRight: CONST.CUBE_MARGIN/2,
+        width: SIZES.row.hint.width,
+        marginRight: SIZES.row.hint.margin,
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
-        backgroundColor: COLORS.game.hints
+        backgroundColor: COLORS2.row.rightPart.hint1_bg
     },
     hint2: {
-        width: CONST.CUBE_SIZE - CONST.CUBE_MARGIN*1.5,
-        marginLeft: CONST.CUBE_MARGIN/2,
+        width: SIZES.row.hint.width,
+        marginLeft: SIZES.row.hint.margin,
         borderTopLeftRadius: 0,
         borderBottomLeftRadius: 0,
-        backgroundColor: COLORS.game.hints
+        backgroundColor: COLORS2.row.rightPart.hint2_bg
     }
 })
 

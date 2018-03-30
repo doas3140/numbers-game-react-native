@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Button, TouchableOpacity, Animated, Easing, TextInput, Keyboard } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { CONST, COLORS, width, height } from '../utils/constants'
+import { CONST, COLORS, FONTS, width, height, COLORS2 } from '../utils/constants'
 import { createAnimation } from '../utils/animations'
 
 class EndGameModal extends React.Component {
@@ -61,7 +61,7 @@ class EndGameModal extends React.Component {
                 <Animated.Text style={[styles.ggText,{
                     transform: [ { translateY: this.interVal1 } ]
                 }]}>
-                    GOOD GAME
+                    {this.props.headerText}
                 </Animated.Text>
 
                 <Animated.Text style={[styles.turnText,{
@@ -86,7 +86,7 @@ class EndGameModal extends React.Component {
                     transform: [ { translateX: this.interVal3 } ]
                 }]}>
                     <TouchableOpacity onPress={this.exit}>
-                        <Icon name='home' size={50} />
+                        <Icon name='home' size={FONTS.endGame.icon1} />
                     </TouchableOpacity>
                 </Animated.View>
 
@@ -95,7 +95,7 @@ class EndGameModal extends React.Component {
                 }]}>
                     <TouchableOpacity>
                         <TouchableOpacity onPress={this.close}>
-                            <Icon name='history' size={50} />
+                            <Icon name='history' size={FONTS.endGame.icon2} />
                         </TouchableOpacity>
                     </TouchableOpacity>
                 </Animated.View>
@@ -107,7 +107,7 @@ class EndGameModal extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.7)',
+        backgroundColor: COLORS2.endGame.background,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         left: width/2 - 80 - 20 - 300, // first nr - width, second - marginRight, third - offset
         height: 60,
         width: 80,
-        backgroundColor: COLORS.button,
+        backgroundColor: COLORS2.endGame.button1_bg,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 20
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         right: width/2 - 80 - 20 - 300, // first nr - width, second - marginLeft, third - offset
         height: 60,
         width: 80,
-        backgroundColor: COLORS.button,
+        backgroundColor: COLORS2.endGame.button2_bg,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 20
@@ -136,26 +136,26 @@ const styles = StyleSheet.create({
     ggText: {
         position: 'absolute',
         top: -100,
-        color: COLORS.button,
-        fontFamily: 'JordanBoldGrunge',
-        fontSize: 60,
+        color: COLORS2.endGame.header_text,
+        fontFamily: FONTS.family,
+        fontSize: FONTS.endGame.header_text,
     },
     turnText: {
         position: 'absolute',
         top: 230,
         left: width/2 - 160/2 - 300, // first nr - width, second - offset
         // left: -170,
-        color: COLORS.button,
-        fontFamily: 'JordanBoldGrunge',
-        fontSize: 40,
+        color: COLORS2.endGame.text,
+        fontFamily: FONTS.family,
+        fontSize: FONTS.endGame.turn_text,
     },
     usernameText: {
         position: 'absolute',
         top: 175,
         left: width/2 - 300/2 - 500, // first nr - width, second - offset
-        color: COLORS.c3,
-        fontFamily: 'JordanBoldGrunge',
-        fontSize: 40,
+        color: COLORS2.endGame.username_text,
+        fontFamily: FONTS.family,
+        fontSize: FONTS.endGame.username_text,
     }
   })
 

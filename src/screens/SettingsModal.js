@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput, Keyboard } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { COLORS } from '../utils/constants'
+import { COLORS, FONTS, COLORS2 } from '../utils/constants'
 
 class SettingsModal extends React.Component {
 
@@ -28,6 +28,7 @@ class SettingsModal extends React.Component {
             alert('Username must be between 5 and 10 symbols')
         }
         Keyboard.dismiss()
+        alert('Changed username to '+this.state.usernameTextInput)
     }
 
     render(){
@@ -37,9 +38,9 @@ class SettingsModal extends React.Component {
 
                     <View style={styles.header}>
                         <TouchableOpacity onPress={this.onExitPress}>
-                            <Icon name='arrow-back' size={40} color={COLORS.bg} style={{marginLeft:8, marginRight:18}} />
+                            <Icon name='arrow-back' size={FONTS.settings.icon_back} color={COLORS2.settings.icon_back} style={{marginLeft:8, marginRight:18}} />
                         </TouchableOpacity>
-                        <Text style={{color:'white',fontFamily:'JordanBoldGrunge',fontSize:40}}>
+                        <Text style={{color:COLORS2.settings.header_text,fontFamily:FONTS.family,fontSize:FONTS.settings.header}}>
                             options
                         </Text>
                     </View>
@@ -47,22 +48,22 @@ class SettingsModal extends React.Component {
                     <View style={styles.body}>
 
                         <View style={{height: 100}}>
-                            <View style={{flex:1, backgroundColor: COLORS.c1, justifyContent:'center'}}>
-                                <Text style={{color:COLORS.bg,fontFamily:'JordanBoldGrunge',fontSize:25,marginLeft:10}}>
+                            <View style={{flex:1, backgroundColor: COLORS2.settings.item.header_bg, justifyContent:'center'}}>
+                                <Text style={{color:COLORS2.settings.item.header_text,fontFamily:FONTS.family,fontSize:FONTS.settings.changeUsername.header,marginLeft:10}}>
                                     change username
                                 </Text>
                             </View>
-                            <View style={{flex:1, flexDirection:'row', backgroundColor: COLORS.button}}>
+                            <View style={{flex:1, flexDirection:'row', backgroundColor: COLORS2.settings.item.body_bg}}>
                                 <TextInput 
-                                    style={{flex:1, fontSize:25, fontFamily:'JordanBoldGrunge',color:COLORS.fontDark}}
+                                    style={{flex:1, fontSize:FONTS.settings.changeUsername.input_text, fontFamily:FONTS.family,color:COLORS2.settings.item.input_text}}
                                     value={this.state.usernameTextInput}
                                     onChangeText={(usernameTextInput)=>this.setState({usernameTextInput})}
                                     onSubmitEditing={this.onButtonPress}
                                 />
                                 <TouchableOpacity onPress={this.onButtonPress}
-                                    style={{width:90, margin: 10, backgroundColor:'#43a047', alignItems:'center',justifyContent:'center'}}
+                                    style={{width:90, margin: 10, backgroundColor:COLORS2.settings.item.button_bg, alignItems:'center',justifyContent:'center'}}
                                 >
-                                    <Text style={{color:COLORS.bg,fontFamily:'JordanBoldGrunge',fontSize:20}}>
+                                    <Text style={{color:COLORS2.settings.item.button_text,fontFamily:FONTS.family,fontSize:FONTS.settings.changeUsername.button_text}}>
                                         confirm
                                     </Text>
                                 </TouchableOpacity>
@@ -80,19 +81,19 @@ class SettingsModal extends React.Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-    //   backgroundColor: 'rgba(0,0,0,0.5)',
+    //   backgroundColor: COLORS2.settings.background,
       alignItems: 'center',
       justifyContent: 'center',
     },
     modal: {
         height: 400,
         width: 300,
-        backgroundColor: COLORS.settingsBg
+        backgroundColor: COLORS2.settings.modal_bg
     },
     header: {
         flexDirection: 'row',
         flex: 1,
-        backgroundColor: COLORS.header,
+        backgroundColor: COLORS2.settings.header_bg,
         alignItems: 'center'
     },
     body: {

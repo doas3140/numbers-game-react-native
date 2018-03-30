@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, Button, TouchableOpacity, ActivityIndicator } from 'react-native'
-import { COLORS, width, height, CONST } from '../utils/constants'
+import { COLORS, width, height, CONST, FONTS, COLORS2,SIZES } from '../utils/constants'
 import { on, off, emit_find_game, emit_cancel_find } from '../utils/socket_io'
 
 class FindingGameIndicator extends React.Component {
@@ -46,12 +46,12 @@ class FindingGameIndicator extends React.Component {
             <TouchableOpacity style={styles.container} onPress={this.forceClose}>
                 <View style={styles.modal}>
                     <View style={styles.header}>
-                        <Text style={[styles.text,{fontSize:24, color: 'white'}]}>
+                        <Text style={[styles.text,{color: COLORS2.findingGame.text}]}>
                             looking for game...
                         </Text>
                         <ActivityIndicator 
-                            size = 'large'
-                            color = 'white'
+                            size = {FONTS.findingGame.circle_size}
+                            color = {COLORS2.findingGame.circle}
                         />
                     </View>
                 </View>
@@ -62,31 +62,30 @@ class FindingGameIndicator extends React.Component {
 
 const styles = StyleSheet.create({
     modal: {
-        height: 80,
-        width: 260,
-        backgroundColor: COLORS.c1,
+        height: SIZES.findingGame.modal.height,
+        width: SIZES.findingGame.modal.width,
+        backgroundColor: COLORS2.findingGame.modal_bg,
         borderRadius: 5,
-        marginBottom: 100,
+        marginBottom: SIZES.findingGame.modal.marginBottom,
         alignItems: 'center',
         justifyContent: 'center'
     },
     container: {
         flex:1,
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: COLORS2.findingGame.background,
         flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'center'
     },
     text: {
-        color: COLORS.fontDark,
-        fontFamily: 'JordanBoldGrunge',
-        fontSize: 40
+        fontFamily: FONTS.family,
+        fontSize: FONTS.findingGame.text_size
     },
     header: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 30,
-        width: 230
+        height: SIZES.findingGame.header.height,
+        width: SIZES.findingGame.header.width
     }
   })
 

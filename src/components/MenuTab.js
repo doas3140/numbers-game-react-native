@@ -1,7 +1,7 @@
 import React from 'react'
 import { AppRegistry, StyleSheet, Text, View, Animated, Image, Easing, TouchableHighlight, Dimensions, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { COLORS } from '../utils/constants'
+import { COLORS, FONTS, COLORS2, SIZES } from '../utils/constants'
 
 class MenuTab extends React.Component {
     /* PROPS
@@ -25,14 +25,14 @@ class MenuTab extends React.Component {
                 <View style={styles.left}>
 
                     <View style={styles.title}>
-                        <Text style={{fontFamily:'JordanBoldGrunge', fontSize:30, color:COLORS.fontDark}} > {this.props.title} </Text>
+                        <Text style={{fontFamily:FONTS.family, fontSize:FONTS.mainMenu.header, color:COLORS2.mainMenu.menuTab.header_text}} > {this.props.title} </Text>
                     </View>
 
                     <View style={styles.button}>
                             <TouchableOpacity onPress={this.props.onMainButton}
-                                style={{backgroundColor:COLORS.button, flex:1, margin:10, borderRadius:10, alignItems:'center', justifyContent:'center'}} 
+                                style={{backgroundColor:COLORS2.mainMenu.menuTab.button_bg, flex:1, margin:10, borderRadius:10, alignItems:'center', justifyContent:'center'}} 
                             >
-                                <Text style={{fontFamily:'JordanBoldGrunge', fontSize:35, color:COLORS.fontGray}} >
+                                <Text style={{fontFamily:FONTS.family, fontSize:FONTS.mainMenu.button, color:COLORS2.mainMenu.menuTab.button_text}} >
                                     {this.props.buttonTitle}
                                 </Text>
                             </TouchableOpacity>
@@ -42,21 +42,21 @@ class MenuTab extends React.Component {
 
                 <View style={styles.right}>
                     
-                    <View style={{backgroundColor:COLORS.c2, flex:1, flexDirection:'row'}}>
+                    <View style={{backgroundColor:COLORS2.mainMenu.menuTab.rightPart.row1_bg, flex:1, flexDirection:'row'}}>
                         <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-                            <Icon name='view-week' size={40} color={COLORS.fontGray} />
+                            <Icon name='view-week' size={FONTS.mainMenu.icon1} color={COLORS2.mainMenu.menuTab.rightPart.icon} />
                         </View>
                         <View style={{flex:1}}>
                             <TouchableOpacity onPress={this.props.onOptionsButton1}
-                                style={{backgroundColor:COLORS.button, flex:1, borderRadius:10, margin:5, alignItems:'center', justifyContent:'center'}}
+                                style={{backgroundColor:COLORS2.mainMenu.menuTab.rightPart.button_bg, flex:1, borderRadius:10, margin:5, alignItems:'center', justifyContent:'center'}}
                             >
 
                                 {(()=>{ let fontSize // for fontsize resize if 'any'
                                     if(this.props.options[0] == 'any'){
-                                        fontSize = 24
-                                    } else { fontSize = 30 }
+                                        fontSize = FONTS.mainMenu.nr_if_any
+                                    } else { fontSize = FONTS.mainMenu.nr_else }
                                     return (
-                                        <Text style={{fontFamily:'JordanBoldGrunge', fontSize, color:COLORS.fontGray}} >
+                                        <Text style={{fontFamily:FONTS.family, fontSize, color:COLORS2.mainMenu.menuTab.rightPart.text}} >
                                             { this.props.options[0] }
                                         </Text>
                                     )
@@ -66,22 +66,21 @@ class MenuTab extends React.Component {
                         </View>
                     </View>
 
-                    <View style={{backgroundColor:COLORS.c3, flex:1, flexDirection:'row'}}>
+                    <View style={{backgroundColor:COLORS2.mainMenu.menuTab.rightPart.row2_bg, flex:1, flexDirection:'row'}}>
                         <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-                        <Icon name='people' size={40} color={COLORS.fontGray}/>
+                        <Icon name='people' size={FONTS.mainMenu.icon2} color={COLORS2.mainMenu.menuTab.rightPart.icon}/>
                         </View>
                         <View style={{flex:1}}>
                             <TouchableOpacity onPress={this.props.onOptionsButton2}
-                                style={{backgroundColor:COLORS.button, flex:1, borderRadius:10, margin:5, alignItems:'center', justifyContent:'center'}}
+                                style={{backgroundColor:COLORS2.mainMenu.menuTab.rightPart.button_bg, flex:1, borderRadius:10, margin:5, alignItems:'center', justifyContent:'center'}}
                             >
                                 
-
                                 {(()=>{ let fontSize // for fontsize resize if 'any'
                                     if(this.props.options[1] == 'any'){
-                                        fontSize = 24
-                                    } else { fontSize = 30 }
+                                        fontSize = FONTS.mainMenu.nr_if_any
+                                    } else { fontSize = FONTS.mainMenu.nr_else }
                                     return (
-                                        <Text style={{fontFamily:'JordanBoldGrunge', fontSize, color:COLORS.fontGray}} >
+                                        <Text style={{fontFamily:FONTS.family, fontSize, color:COLORS2.mainMenu.menuTab.rightPart.text}} >
                                             { this.props.options[1] }
                                         </Text>
                                     )
@@ -108,14 +107,13 @@ const styles = StyleSheet.create({
     },
     title: {
         flex: 1,
-        backgroundColor: COLORS.menuTitle,
+        backgroundColor: COLORS2.mainMenu.menuTab.row1_bg,
         alignItems: 'center',
         justifyContent: 'center'
     },
     button: {
         flex: 1,
-        backgroundColor: COLORS.c1,
-        // padding: 10
+        backgroundColor: COLORS2.mainMenu.menuTab.row2_bg
     },
     left: {
         flex: 2,

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
+import { FONTS, COLORS2 } from '../utils/constants'
 
 class TimerCountdown extends React.Component {
     /* PROPS
@@ -59,9 +60,9 @@ class TimerCountdown extends React.Component {
 
 const styles = StyleSheet.create({
     headerNumber:{
-        fontSize: 30,
-        fontFamily: 'JordanBoldGrunge',
-        color: 'white'
+        fontSize: FONTS.timer.text_size,
+        fontFamily: FONTS.family,
+        color: COLORS2.timer.text
     }
 })
 

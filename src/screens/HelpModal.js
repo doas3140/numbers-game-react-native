@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput, Keyboard }
 import Cube from '../components/Cube'
 import Row from '../components/Row'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { CONST, COLORS, width, height } from '../utils/constants'
+import { CONST, COLORS, width, height, FONTS, COLORS2, SIZES } from '../utils/constants'
 
 class HelpModal extends React.Component {
 
@@ -37,15 +37,15 @@ class HelpModal extends React.Component {
 
                     <View style={styles.header}>
                         <TouchableOpacity onPress={this.onLeftPress} style={{flex:1}}>
-                            <Icon name='arrow-back' size={40} color={COLORS.bg} style={{marginLeft:7, marginRight:0}} />
+                            <Icon name='arrow-back' size={FONTS.help.icon_back} color={COLORS2.help.icon_back} style={{marginLeft:7, marginRight:0}} />
                         </TouchableOpacity>
                         <View style={[{flex:4},styles.center]}>
-                            <Text style={{color:'white',fontFamily:'JordanBoldGrunge',fontSize:30}}>
+                            <Text style={{color:COLORS2.help.header_text,fontFamily:FONTS.family,fontSize:FONTS.help.header}}>
                                 how to play
                             </Text>
                         </View>
                         <TouchableOpacity onPress={this.onRightPress} style={{flex:1}}>
-                            <Icon name='arrow-forward' size={40} color={COLORS.bg} style={{marginRight:0, marginLeft:0}} />
+                            <Icon name='arrow-forward' size={FONTS.help.icon_forward} color={COLORS2.help.icon_forward} style={{marginRight:0, marginLeft:0}} />
                         </TouchableOpacity>
                     </View>
 
@@ -56,15 +56,15 @@ class HelpModal extends React.Component {
                                 case 1:
                                     return (
                                         <View style={{margin:7}}>
-                                            <Text style={[styles.text,{lineHeight:43}]}>
+                                            <Text style={[styles.text,{lineHeight:FONTS.help.page1.line_height}]}>
                                                 You need to crack
-                                                <Text style={{color:'yellow'}}> 4 numbers </Text>
+                                                <Text style={{color:COLORS2.help.page1.subtext1}}> 4 numbers </Text>
                                                 to break into the safe.
                                                 Luckily safe has
-                                                <Text style={{color:'orange'}}> hint mechanism</Text>.
+                                                <Text style={{color:COLORS2.help.page1.subtext2}}> hint mechanism</Text>.
                                                 Each time you guess a password it shows how correct your guess was.
                                                 But be carefull, after several tries the safe
-                                                <Text style={{color:'red'}}> locks permanently</Text>.
+                                                <Text style={{color:COLORS2.help.page1.subtext3}}> locks permanently</Text>.
                                             </Text>
                                         </View>
                                     )
@@ -89,7 +89,7 @@ class HelpModal extends React.Component {
                                             <View style={styles.row}>
                                                 <Text style={styles.text}> To guess press </Text>
                                                 <TouchableOpacity onPress={()=>{}} style={styles.btn}>
-                                                    <Icon name='arrow-drop-down' size={65} style={{marginTop:0}} />
+                                                    <Icon name='arrow-drop-down' size={FONTS.row.icon_arrow_bottom} style={{marginTop:0}} />
                                                 </TouchableOpacity>
                                             </View>
 
@@ -135,19 +135,19 @@ class HelpModal extends React.Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'rgba(0,0,0,0.5)',
+      backgroundColor: COLORS2.help.background,
       alignItems: 'center',
       justifyContent: 'center',
     },
     modal: {
-        height: 500,
-        width: 320,
-        backgroundColor: COLORS.helpBg
+        height: SIZES.help.height,
+        width: SIZES.help.width,
+        backgroundColor: COLORS2.help.modal_bg
     },
     header: {
         flexDirection: 'row',
         flex: 1,
-        backgroundColor: COLORS.header,
+        backgroundColor: COLORS2.help.header_bg,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -158,9 +158,9 @@ const styles = StyleSheet.create({
         marginBottom: 0
     },
     text: {
-        fontSize: 32,
-        fontFamily: 'NanumPenScript',
-        color: 'white',
+        fontSize: FONTS.help.text_size,
+        fontFamily: FONTS.help.family,
+        color: COLORS2.help.text,
         textAlign: 'center'
     },
     center: {
@@ -173,26 +173,26 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     btn: {
-        margin: CONST.CUBE_MARGIN,
-        width: CONST.CUBE_SIZE*2 - CONST.CUBE_MARGIN*2, 
-        height: CONST.CUBE_SIZE - CONST.CUBE_MARGIN*2, 
-        backgroundColor: COLORS.game.button,
+        margin: SIZES.row.button.margin,
+        width: SIZES.row.button.width, 
+        height: SIZES.row.button.height, 
+        backgroundColor: COLORS2.row.rightPart.button_bg,
         alignItems: 'center',
         justifyContent: 'center'
     },
     hint1: {
-        width: CONST.CUBE_SIZE - CONST.CUBE_MARGIN*1.5,
-        marginRight: CONST.CUBE_MARGIN/2,
+        width: SIZES.row.hint.width,
+        marginRight: SIZES.row.hint.margin,
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
-        backgroundColor: COLORS.game.hints
+        backgroundColor: COLORS2.row.rightPart.hint1_bg
     },
     hint2: {
-        width: CONST.CUBE_SIZE - CONST.CUBE_MARGIN*1.5,
-        marginLeft: CONST.CUBE_MARGIN/2,
+        width: SIZES.row.hint.width,
+        marginLeft: SIZES.row.hint.margin,
         borderTopLeftRadius: 0,
         borderBottomLeftRadius: 0,
-        backgroundColor: COLORS.game.hints
+        backgroundColor: COLORS2.row.rightPart.hint2_bg
     }
   })
 

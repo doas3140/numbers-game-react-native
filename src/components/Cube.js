@@ -1,6 +1,6 @@
 import React from 'react'
 import { AppRegistry, StyleSheet, Text, View, Animated, Image, Easing, TouchableHighlight, Dimensions, TouchableOpacity } from 'react-native'
-import { CONST, COLORS } from '../utils/constants'
+import { CONST, COLORS, FONTS, COLORS2, SIZES } from '../utils/constants'
 import { nr2color_Dark, nr2color_Light } from '../utils/constants'
 
 class Cube extends React.Component {
@@ -9,6 +9,7 @@ class Cube extends React.Component {
     row_numbers [](4 numbers) = all numbers from the same row
     ! number (number) = showing number
     onNumberPressCallback (function) = callback
+    onNumberLongPressCallback
     ! index (number) = row index
     newStyle (style) = overrites style with new style
 
@@ -40,11 +41,19 @@ class Cube extends React.Component {
         this.props.onNumberPressCallback(this.index, new_number)
     }
 
+    onNumberLongPress = ()=>{
+        this.props.onNumberLongPressCallback(this.index)
+    }
+
     // Adds some number to this.state.number
     addNumber = (number)=>{
         if(number < 9){
             number = number + 1
-        } else {
+        } else
+        if(this.index != 0){
+            number = 0
+        }
+        else {
             number = 1
         }
         return number
@@ -57,7 +66,7 @@ class Cube extends React.Component {
             this.nr2color = nr2color_Light
             this.state.color = this.nr2color(this.props.number)
             return (
-                <TouchableOpacity style={[styles.cube, {backgroundColor:this.state.color}, this.props.newStyle]} onPress={this.onNumberPress}>
+                <TouchableOpacity style={[styles.cube, {backgroundColor:this.state.color}, this.props.newStyle]} onPress={this.onNumberPress} onLongPress={this.onNumberLongPress}>
                     <View style={styles.numberView}>
                         <Text style={styles.number}> {this.props.number} </Text>
                     </View>
@@ -83,16 +92,15 @@ class Cube extends React.Component {
 
 const styles = StyleSheet.create({
     cube: {
-        height: CONST.CUBE_SIZE - 2*CONST.CUBE_MARGIN,
-        width: CONST.CUBE_SIZE - 2*CONST.CUBE_MARGIN,
-        borderRadius: 4,
-        margin: CONST.CUBE_MARGIN,
+        height: SIZES.cube.height,
+        width: SIZES.cube.width,
+        borderRadius: SIZES.cube.borderRadius,
+        margin: SIZES.cube.margin,
     },
     number: {
-        fontFamily: 'JordanBoldGrunge',
-        fontSize: CONST.CUBE_TEXT_SIZE,
-        // fontWeight: 'bold',
-        color: COLORS.fontDark
+        fontFamily: FONTS.family,
+        fontSize: FONTS.row.cube_text,
+        color: COLORS2.row.leftPart.cube_text
     },
     numberView: {
         flex: 1,

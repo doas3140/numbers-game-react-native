@@ -8,6 +8,7 @@ import EndGameModal from './src/screens/EndGameModal'
 import MultiplayerScreen from './src/screens/MultiplayerScreen'
 import FindingGameIndicator from './src/screens/FindingGameIndicator'
 import HelpModal from './src/screens/HelpModal'
+import SelectNumberModal from './src/screens/SelectNumberModal'
 
 // Register Screens
 Navigation.registerComponent('Menu', ()=>MenuScreen)
@@ -18,6 +19,7 @@ Navigation.registerComponent('MultiplayerGame', ()=>MultiplayerScreen)
 Navigation.registerComponent('ReadyModal', ()=>ReadyModal)
 Navigation.registerComponent('FindingGame', ()=>FindingGameIndicator)
 Navigation.registerComponent('Help', ()=>HelpModal)
+Navigation.registerComponent('SelectNumber', ()=>SelectNumberModal)
 
 // Start app
 Navigation.startSingleScreenApp({

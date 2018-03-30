@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import MenuTab from '../components/MenuTab'
-import { COLORS, CONST } from '../utils/constants'
+import { COLORS, CONST, FONTS, COLORS2 } from '../utils/constants'
 import { socket, emit_info, emit_find_game, emit_ready_to_play, on, off } from '../utils/socket_io.js'
 
 class MenuScreen extends React.Component {
@@ -113,16 +113,6 @@ class MenuScreen extends React.Component {
         })
     }
 
-    // showReadyModal = ()=>{
-    //     this.props.navigator.showLightBox({
-    //         screen: 'ReadyModal',
-    //         passProps: {
-    //             startGame: this.multiplayer_startGame,
-    //             username: this.USERNAME
-    //         }
-    //     })
-    // }
-
     // Option Button Actions
     singleplayer_rowLength = ()=>{
         if(this.state.sp_rowLength == 5){
@@ -184,8 +174,8 @@ class MenuScreen extends React.Component {
                 <View style={styles.nothing} />
                 
                 <View style={styles.title}>
-                    <FontAwesomeIcon name='cube' size={70} color={COLORS.fontGray} />
-                    <Text style={{fontFamily:'JordanBoldGrunge', fontSize:35, color:COLORS.fontGray, marginTop: 0}}> numbers game </Text>
+                    <FontAwesomeIcon name='cube' size={FONTS.mainMenu.logo_size} color={COLORS2.mainMenu.logo} />
+                    <Text style={{fontFamily:FONTS.family, fontSize:FONTS.mainMenu.logo_text, color:COLORS2.mainMenu.logo_text, marginTop: 0}}> numbers game </Text>
                 </View>
 
                 <View style={styles.singleplayer}>
@@ -202,13 +192,13 @@ class MenuScreen extends React.Component {
 
                 <View style={[styles.settings,{right:0}]}>
                     <TouchableOpacity onPress={this.onHelpPress}>
-                        <Icon name='help' size={40} color={COLORS.fontGray}/>
+                        <Icon name='help' size={FONTS.mainMenu.icon_help} color={COLORS2.mainMenu.icon_help}/>
                     </TouchableOpacity>
                 </View>
 
                 <View style={[styles.settings,{left:0}]}>
                     <TouchableOpacity onPress={this.onSettingsPress}>
-                        <Icon name='settings' size={40} color={COLORS.fontGray}/>
+                        <Icon name='settings' size={FONTS.mainMenu.icon_settings} color={COLORS2.mainMenu.icon_settings}/>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -220,12 +210,10 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       flexWrap: 'wrap',
-      backgroundColor: COLORS.bg
+      backgroundColor: COLORS2.mainMenu.background
     },
     settings: {
         position: 'absolute',
-        // backgroundColor: 'green',
-        // right: 0,
         top: 0,
         height: 70,
         width: 70,

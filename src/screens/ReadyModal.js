@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, Button, TouchableOpacity, ActivityIndicator } from 'react-native'
-import { COLORS, width, height, CONST } from '../utils/constants'
+import { COLORS, width, height, CONST, FONTS, COLORS2, SIZES } from '../utils/constants'
 import { on, off, emit_ready_to_play } from '../utils/socket_io'
 
 class ReadyModal extends React.Component {
@@ -48,7 +48,7 @@ class ReadyModal extends React.Component {
                         return (
                             <View style={styles.modal}>
                                 <View style={styles.header}>
-                                    <Text style={[styles.text,{fontSize:24, color: 'white'}]}>
+                                    <Text style={[styles.text,{fontSize:FONTS.readyModal.text_size, color: COLORS2.readyModal.text}]}>
                                         your game is ready
                                     </Text>
                                 </View>
@@ -63,14 +63,14 @@ class ReadyModal extends React.Component {
                         return (
                             <View style={styles.modal}>
                                 <View style={styles.header}>
-                                    <Text style={[styles.text,{fontSize:24, color: 'white'}]}>
+                                    <Text style={[styles.text,{fontSize:FONTS.readyModal.text_size, color: COLORS2.readyModal.text}]}>
                                         waiting for others
                                     </Text>
                                 </View>
                                 <TouchableOpacity style={styles.button} >
                                         <ActivityIndicator 
-                                            size = 'large'
-                                            color = {COLORS.c1}
+                                            size = {FONTS.readyModal.circle_size}
+                                            color = {COLORS2.readyModal.circle}
                                         />
                                 </TouchableOpacity>
                             </View>
@@ -85,37 +85,36 @@ class ReadyModal extends React.Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#000000AA',
+      backgroundColor: COLORS2.readyModal.background,
       alignItems: 'center',
       justifyContent: 'center',
     },
     modal: {
-        height: 140,
-        width: 260,
-        backgroundColor: COLORS.c1,
+        height: SIZES.readyModal.modal.height,
+        width: SIZES.readyModal.modal.width,
+        backgroundColor: COLORS2.readyModal.modal_bg,
         borderRadius: 5,
         marginBottom: 100,
         alignItems: 'center',
         justifyContent: 'center'
     },
     button: {
-        backgroundColor: COLORS.button,
-        height: 80,
-        width: 200,
+        backgroundColor: COLORS2.readyModal.button_bg,
+        height: SIZES.readyModal.button.height,
+        width: SIZES.readyModal.button.width,
         borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center'
     },
     text: {
-        color: COLORS.fontDark,
-        fontFamily: 'JordanBoldGrunge',
-        fontSize: 40
+        fontFamily: FONTS.family,
+        fontSize: FONTS.readyModal.button_text
     },
     header: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 30,
-        width: 230,
+        height: SIZES.readyModal.header.height,
+        width: SIZES.readyModal.header.width,
         marginBottom: 10
     }
   })

@@ -1,6 +1,6 @@
 import React from 'react'
 import { AppRegistry, ActivityIndicator, Modal, StyleSheet, Text, View, Animated, Image, Easing, TouchableHighlight, Dimensions, TouchableOpacity } from 'react-native'
-import { CONST, width, COLORS } from '../utils/constants'
+import { CONST, width, COLORS, FONTS, COLORS2, SIZES } from '../utils/constants'
 
 class WaitingPlayerModal extends React.Component {
     /* PROPS
@@ -23,14 +23,14 @@ class WaitingPlayerModal extends React.Component {
                 <View style={styles.modal}>
                     <View style={styles.insideModal}>
                         <Text style={styles.text}> Waiting for "
-                            <Text style={{color:COLORS.button, fontSize: 27}}>
+                            <Text style={{color:COLORS2.game.waitingPlayer.username_text, fontSize: FONTS.game.waitingPlayer.username_size}}>
                                 {this.props.username}
                             </Text>
                             "
                         </Text>
                         <ActivityIndicator 
-                            size = 'large'
-                            color = '#ededed'
+                            size = {FONTS.game.waitingPlayer.circle_size}
+                            color = {COLORS2.game.waitingPlayer.circle}
                         />
                     </View>
                 </View>
@@ -47,21 +47,21 @@ class WaitingPlayerModal extends React.Component {
 
 const styles = StyleSheet.create({
     modal: {
-        marginTop: CONST.CUBE_SIZE + CONST.GAME_WINDOW_MARGIN,
+        marginTop: SIZES.waitingPlayer.marginTop,
         position: 'absolute'
     },
     insideModal: {
         flexDirection: 'row',
-        height: CONST.CUBE_SIZE,
-        width: width,
-        backgroundColor: COLORS.header,
+        height: SIZES.waitingPlayer.height,
+        width: SIZES.waitingPlayer.width,
+        backgroundColor: COLORS2.game.waitingPlayer.background,
         justifyContent: 'center',
         alignItems: 'center'
     },
     text: {
-        fontSize: 25,
-        fontFamily: 'JordanBoldGrunge',
-        color: COLORS.game.gameWindow
+        fontSize: FONTS.game.waitingPlayer.text_size,
+        fontFamily: FONTS.family,
+        color: COLORS2.game.waitingPlayer.text
     }
 })
 

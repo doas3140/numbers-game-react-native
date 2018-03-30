@@ -4,7 +4,7 @@ import Cube from '../components/Cube'
 import Row from '../components/Row'
 import TimerCountdown from '../components/TimerCountdown'
 import { createAnimation } from '../utils/animations'
-import { CONST, COLORS, width, height } from '../utils/constants'
+import { CONST, COLORS, width, height, FONTS, COLORS2 } from '../utils/constants'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import WaitingPlayerOverlay from '../components/WaitingPlayerOverlay'
@@ -204,7 +204,25 @@ class MultiplayerScreen extends React.Component {
     }
 
     onNumberPressCallback = (nr_index, new_number)=>{
-        this.state.topRow.numbers[nr_index] = new_number
+        this.changeNumber(nr_index,new_number)
+    }
+
+    onNumberLongPressCallback = (nr_index)=>{
+        this.props.navigator.showLightBox({
+            screen:'SelectNumber',
+            passProps: {
+                index: nr_index,
+                numbers: this.state.topRow.numbers.slice(),
+                changeNumber: this.changeNumber
+            },
+            style: {
+                backgroundBlur: 'dark'
+            }
+        })
+    }
+
+    changeNumber = (index,new_number)=>{
+        this.state.topRow.numbers[index] = new_number
         this.setState({
             topRow: this.state.topRow
         })
@@ -233,11 +251,11 @@ class MultiplayerScreen extends React.Component {
                 
                 <View style={styles.header}>
                     <TouchableOpacity onPress={this.exit} style={[styles.headerItem,{flex:1,justifyContent:'flex-start', marginLeft:8}]}>
-                        <Icon name='arrow-back' size={40} color={COLORS.game.gameWindow} />
+                        <Icon name='arrow-back' size={FONTS.game.multiplayerGame.icon_back} color={COLORS2.game.multiplayerGame.icon_back} />
                     </TouchableOpacity>
                     <View style={styles.headerItem}>
                         <View style={[styles.headerItem,{justifyContent:'flex-end'}]}>
-                            <Icon name='filter-none' size={30} color={COLORS.game.gameWindow} style={{marginLeft:5}} />
+                            <Icon name='filter-none' size={FONTS.game.multiplayerGame.icon_turn} color={COLORS2.game.multiplayerGame.icon_turn} style={{marginLeft:5}} />
                         </View>
                         <View style={[styles.headerItem,{justifyContent:'flex-start'}]}>
                             <Text style={styles.headerNumber}> { this.state.turn } </Text>
@@ -249,7 +267,7 @@ class MultiplayerScreen extends React.Component {
                                 return (
                                     <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                                         <View style={[styles.headerItem,{justifyContent:'flex-end'}]}>
-                                            <Icon name='timer' size={33} color={COLORS.game.gameWindow} />
+                                            <Icon name='timer' size={FONTS.game.multiplayerGame.icon_timer} color={COLORS2.game.multiplayerGame.icon_timer} />
                                         </View>
                                         <View style={[styles.headerItem,{justifyContent:'flex-start'}]}>
 
@@ -264,12 +282,12 @@ class MultiplayerScreen extends React.Component {
                                     </View>
                                 )
                             } else {
-                                return <Icon name='timer-off' size={30} color={COLORS.game.gameWindow} style={{alignSelf:'center', marginRight:10}} />
+                                return <Icon name='timer-off' size={FONTS.game.multiplayerGame.icon_timer_off} color={COLORS2.game.multiplayerGame.icon_timer_off} style={{alignSelf:'center', marginRight:10}} />
                             }
                         })() }
                     </View>    
                     <TouchableOpacity onPress={this.showHelp} style={[styles.headerItem,{flex:1}]}>
-                        <Icon name='help-outline' size={35} color={COLORS.game.gameWindow} />
+                        <Icon name='help-outline' size={FONTS.game.multiplayerGame.icon_help} color={COLORS2.game.multiplayerGame.icon_help} />
                     </TouchableOpacity>
                 </View>
 
@@ -283,7 +301,7 @@ class MultiplayerScreen extends React.Component {
                             { translateY: this.interpolatedValue1 }
                         ]
                     }}>
-                        <Row index={0} row={this.state.topRow} button={this.state.button} onButtonPress={this.onButtonPress} onNumberPressCallback={this.onNumberPressCallback} />
+                        <Row index={0} row={this.state.topRow} button={this.state.button} onButtonPress={this.onButtonPress} onNumberPressCallback={this.onNumberPressCallback} onNumberLongPressCallback={this.onNumberLongPressCallback} />
                     </Animated.View>
 
                     { (()=>{
@@ -294,7 +312,7 @@ class MultiplayerScreen extends React.Component {
                                         width: (this.props.numbersLength+2)*CONST.CUBE_SIZE,
                                         height: CONST.CUBE_SIZE*2,
                                     }]}>
-                                        <CommunityIcon name='bullseye' size={43} color={COLORS.button}/>
+                                        <CommunityIcon name='bullseye' size={FONTS.game.multiplayerGame.icon_bullseye} color={COLORS2.game.multiplayerGame.icon_bullseye}/>
                                         <Text style={styles.ggText}>
                                             {this.GOAL_NR}
                                         </Text>
@@ -342,11 +360,11 @@ class MultiplayerScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.game.bg
+        backgroundColor: COLORS2.game.multiplayerGame.background
     },
     header: {
         flexDirection: 'row',
-        backgroundColor: COLORS.header,
+        backgroundColor: COLORS2.game.multiplayerGame.header_bg,
         height: CONST.CUBE_SIZE
     },
     headerItem: {
@@ -356,9 +374,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     headerNumber:{
-        fontSize: 30,
-        fontFamily: 'JordanBoldGrunge',
-        color: 'white'
+        fontSize: FONTS.game.multiplayerGame.turn_text,
+        fontFamily: FONTS.family,
+        color: COLORS2.game.multiplayerGame.turn_text
     },
     history: {
         position: 'absolute',
@@ -372,7 +390,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         // flexWrap: 'wrap',
-        backgroundColor: COLORS.game.gameWindow,
+        backgroundColor: COLORS2.game.multiplayerGame.game_window_bg,
         marginTop: CONST.GAME_WINDOW_MARGIN,
         marginBottom: CONST.GAME_WINDOW_MARGIN
         // alignItems: 'center'
@@ -380,15 +398,15 @@ const styles = StyleSheet.create({
     gg_bg_block: {
         flexDirection: 'row',
         position: 'absolute',
-        backgroundColor: COLORS.game.bg,
+        backgroundColor: COLORS2.game.multiplayerGame.end_bg,
         alignItems: 'center',
         justifyContent: 'center'
     },
     ggText: {
         marginLeft: 10,
-        fontSize: 60,
-        fontFamily: 'JordanBoldGrunge',
-        color: COLORS.game.gameWindow
+        fontSize: FONTS.game.multiplayerGame.end_numbers_text,
+        fontFamily: FONTS.family,
+        color: COLORS2.game.multiplayerGame.end_text
     }
 })
 
