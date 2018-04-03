@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppRegistry, StyleSheet, Text, View, Animated, Image, Easing, TouchableHighlight, Dimensions, TouchableOpacity } from 'react-native'
+import { AppRegistry, TouchableWithoutFeedback, StyleSheet, Text, View, Animated, Image, Easing, TouchableHighlight, Dimensions, TouchableOpacity } from 'react-native'
 import { CONST, COLORS, FONTS, COLORS2, SIZES } from '../utils/constants'
 import { nr2color_Dark, nr2color_Light } from '../utils/constants'
 
@@ -22,23 +22,20 @@ class Cube extends React.Component {
     index (number) = row index
     
     */
-    state = {
-        color: 'white'
-    }
     index = this.props.index
 
     onNumberPress = ()=>{
-        // console.log('Numbers in a row: ', this.props.row_numbers)
         // Add until there are no same numbers in row
-        let new_number = this.props.number
-        while(true){
-            new_number = this.addNumber(new_number)
-            // console.log(new_number)
-            if(!this.props.row_numbers.includes(new_number)){
-                break
+        window.requestAnimationFrame(()=>{
+            let new_number = this.props.number
+            while(true){
+                new_number = this.addNumber(new_number)
+                if(!this.props.row_numbers.includes(new_number)){
+                    break
+                }
             }
-        }
-        this.props.onNumberPressCallback(this.index, new_number)
+            this.props.onNumberPressCallback(this.index, new_number)
+        })
     }
 
     onNumberLongPress = ()=>{
@@ -49,24 +46,18 @@ class Cube extends React.Component {
     addNumber = (number)=>{
         if(number < 9){
             number = number + 1
-        } else
-        if(this.index != 0){
+        } else {
             number = 0
-        }
-        else {
-            number = 1
         }
         return number
     }
 
     getCubeComponent = ()=>{
-        // console.log(this.props.index, 'Cube toucheble: ', this.props.touchable)
 
         if(this.props.touchable){
             this.nr2color = nr2color_Light
-            this.state.color = this.nr2color(this.props.number)
             return (
-                <TouchableOpacity style={[styles.cube, {backgroundColor:this.state.color}, this.props.newStyle]} onPress={this.onNumberPress} onLongPress={this.onNumberLongPress}>
+                <TouchableOpacity style={[styles.cube, {backgroundColor:this.nr2color(this.props.number)}, this.props.newStyle]} onPress={this.onNumberPress} onLongPress={this.onNumberLongPress}>
                     <View style={styles.numberView}>
                         <Text style={styles.number}> {this.props.number} </Text>
                     </View>
@@ -74,9 +65,8 @@ class Cube extends React.Component {
             )
         } else {
             this.nr2color = nr2color_Dark
-            this.state.color = this.nr2color(this.props.number)
             return (
-                <View style={[styles.cube, {backgroundColor:this.state.color}, this.props.newStyle]}>
+                <View style={[styles.cube, {backgroundColor:this.nr2color(this.props.number)}, this.props.newStyle]}>
                     <View style={styles.numberView}>
                         <Text style={styles.number}> {this.props.number} </Text>
                     </View>

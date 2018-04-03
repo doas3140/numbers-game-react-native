@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppRegistry, StyleSheet, FlatList, Text, View, Animated, Image, Easing, TouchableHighlight, Dimensions, TouchableOpacity, Button, ScrollView } from 'react-native';
+import { Alert, AppRegistry, StyleSheet, FlatList, Text, View, Animated, Image, Easing, TouchableHighlight, Dimensions, TouchableOpacity, Button, ScrollView } from 'react-native';
 import Cube from '../components/Cube'
 import Row from '../components/Row'
 import TimerCountdown from '../components/TimerCountdown'
@@ -70,10 +70,9 @@ class SingleplayerScreen extends React.Component {
     }
 
     componentDidMount(){
-        // MAX = nr_array_length * 2 + random from [-2,-1,0,1,2]
-        this.MAX_TURNS = this.state.topRow.numbers.length*2 + (Math.floor(Math.random()*5)+1-3)
+        // MAX = nr_array_length * 2 + random from [1,2]
+        this.MAX_TURNS = this.state.topRow.numbers.length*2 + (Math.floor(Math.random()*2)+1)
         this.GOAL_NR = this.generateRandomNumbers()
-        console.log('GOAL NR: ',this.GOAL_NR)
         // testing
     }
 
@@ -87,7 +86,7 @@ class SingleplayerScreen extends React.Component {
     animate = (callback)=>{
             this.state.animatedValueIncrease.setValue(0)
             
-            animation = createAnimation(Value=this.state.animatedValueIncrease, duration=CONST.ROW_SLIDE_DOWN_DURATION, easing=Easing.bounce, delay=0)
+            animation = createAnimation(Value=this.state.animatedValueIncrease, duration=CONST.ROW_SLIDE_DOWN_DURATION, easing=Easing.ease, delay=0)
             animation.start(()=>{
                 callback()
             })
@@ -114,6 +113,7 @@ class SingleplayerScreen extends React.Component {
     }
 
     checkForEndGame = (hints)=>{
+        console.log(this.state.history)
         if(hints[1] == this.props.numbersLength){
             this.GAME_OVER = true
             this.setState({})
@@ -150,7 +150,6 @@ class SingleplayerScreen extends React.Component {
         new_row.hints = this.getHints(this.state.topRow.numbers, this.GOAL_NR)
 
         this.state.history.unshift({key:new_row.key, hints:new_row.hints, numbers:new_numbers})
-        console.log('Test: ', this.state.topRow === this.state.history[0])
         this.state.topRow.key += 1
         this.setState({
             button: true,
@@ -163,7 +162,6 @@ class SingleplayerScreen extends React.Component {
     }
 
     newTurn = ()=>{
-        console.log('======= NEW TURN ==============')
         this.deleteButton(()=>{
             this.animate(()=>{
                 this.addTopRowToHistory(()=>{
@@ -200,10 +198,19 @@ class SingleplayerScreen extends React.Component {
     }
 
     exit = ()=>{
-        this.props.navigator.pop({
-            animated: true,
-            animationType: 'fade'
-        })
+        Alert.alert(
+            'Are you sure you want to leave?',
+            '',
+            [
+                {text:'No', onPress: ()=>{}, style:'cancel'},
+                {text:'Yes', onPress: ()=>{
+                    this.props.navigator.pop({
+                        animated: true,
+                        animationType: 'fade'
+                    })
+                }}
+            ]
+        )
     }
 
     onTimeIsUp = (startTimer)=>{
@@ -263,13 +270,19 @@ class SingleplayerScreen extends React.Component {
                     marginRight: CONST.ROW_BONUS_MARGIN + (5-this.props.numbersLength)*CONST.CUBE_SIZE/2,
                     marginLeft: CONST.ROW_BONUS_MARGIN + (5-this.props.numbersLength)*CONST.CUBE_SIZE/2
                 }]}>
+
+                    <View style={[styles.gg_bg_block, {
+                        left: 0, top: 0,
+                        width: (this.props.numbersLength+2)*CONST.CUBE_SIZE,
+                        height: CONST.CUBE_SIZE*2,
+                    }]} />
                 
                     <Animated.View style={{
                         transform: [
                             { translateY: this.interpolatedValue1 }
                         ]
                     }}>
-                        <Row index={0} row={this.state.topRow} button={this.state.button} onButtonPress={this.newTurn} onNumberPressCallback={this.onNumberPressCallback} onNumberLongPressCallback={this.onNumberLongPressCallback} />
+                        <Row index={0} row={this.state.topRow} button={this.state.button} onButtonPress={this.newTurn} newStyleLeft={{backgroundColor:COLORS2.game.singleplayerGame.top_row_bg}} newStyleRight={{backgroundColor:COLORS2.game.singleplayerGame.top_row_bg}} onNumberPressCallback={this.onNumberPressCallback} onNumberLongPressCallback={this.onNumberLongPressCallback} />
                     </Animated.View>
 
                     { (()=>{
@@ -297,6 +310,7 @@ class SingleplayerScreen extends React.Component {
 
                         <FlatList styles={styles.history}
                                 //scrollEnabled = {false}
+                                getItemLayout = {(data,index)=>{return {length:CONST.CUBE_SIZE,index,offset:CONST.CUBE_SIZE*index}}}
                                 data = {this.state.history}
                                 extraData = {this.state}
                                 renderItem = {({item})=>{

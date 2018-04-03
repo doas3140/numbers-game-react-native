@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Button, TouchableOpacity, AsyncStorage } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import MenuTab from '../components/MenuTab'
@@ -32,13 +32,25 @@ class MenuScreen extends React.Component {
         mp_timer: 60,
         mp_userCount: 2
     }
-    USERNAME = 'mister'
+    USERNAME = 'user'+Math.ceil(Math.random()*9)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)
     CONNECTED = true
 
     componentDidMount(){
-        on('connect_error',     ()=>{this.CONNECTED=false; console.log(false)})
-        on('reconnect_error',   ()=>{this.CONNECTED=false; console.log(false)})
-        on('reconnect',         ()=>{this.CONNECTED=true;  console.log(true)})
+        // load username from db
+        try {
+            AsyncStorage.getItem('@numbers_game:username',(e,username)=>{
+                console.log(e)
+                if (username != null){
+                    this.USERNAME = username
+                }
+            })
+        } catch (error) {
+            alert('Cannot load previous username. Change it in settings.')
+        }
+        // create socket io listeners
+        on('connect_error',     ()=>{this.CONNECTED=false})
+        on('reconnect_error',   ()=>{this.CONNECTED=false})
+        on('reconnect',         ()=>{this.CONNECTED=true})
     }
 
     multiplayer_startGame = ()=>{
@@ -85,7 +97,6 @@ class MenuScreen extends React.Component {
         if(this.CONNECTED){
             emit_info(this.USERNAME)
             on('emit_info_res', (data)=>{
-                console.log('Name is allowed:', data.name_allowed)
                 off('emit_info_res')
                 if(data.name_allowed){
                     this.showFindingGame()
@@ -164,7 +175,13 @@ class MenuScreen extends React.Component {
     // change username
     changeUsername = (username)=>{
         this.USERNAME = username
-        console.log('New name - ', this.USERNAME)
+        try {
+            AsyncStorage.setItem('@numbers_game:username',username, (e)=>{
+                alert('Changed username to '+username)
+            })
+        } catch (error) {
+            alert('Error happened. Cannot change username.')
+        }
     }
  
     render(){
@@ -215,8 +232,8 @@ const styles = StyleSheet.create({
     settings: {
         position: 'absolute',
         top: 0,
-        height: 70,
-        width: 70,
+        height: FONTS.mainMenu.icon_help+30,
+        width: FONTS.mainMenu.icon_help+30,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 15,
@@ -233,7 +250,7 @@ const styles = StyleSheet.create({
     },
     multiplayer: {
         flex:3,
-        marginTop:10
+        marginTop:25
     },
     nothing: {
         flex:1

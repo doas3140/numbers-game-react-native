@@ -30,7 +30,7 @@ class MenuTab extends React.Component {
 
                     <View style={styles.button}>
                             <TouchableOpacity onPress={this.props.onMainButton}
-                                style={{backgroundColor:COLORS2.mainMenu.menuTab.button_bg, flex:1, margin:10, borderRadius:10, alignItems:'center', justifyContent:'center'}} 
+                                style={{backgroundColor:COLORS2.mainMenu.menuTab.button_bg, flex:1, margin:5, borderRadius:0, alignItems:'center', justifyContent:'center'}} 
                             >
                                 <Text style={{fontFamily:FONTS.family, fontSize:FONTS.mainMenu.button, color:COLORS2.mainMenu.menuTab.button_text}} >
                                     {this.props.buttonTitle}
@@ -48,7 +48,7 @@ class MenuTab extends React.Component {
                         </View>
                         <View style={{flex:1}}>
                             <TouchableOpacity onPress={this.props.onOptionsButton1}
-                                style={{backgroundColor:COLORS2.mainMenu.menuTab.rightPart.button_bg, flex:1, borderRadius:10, margin:5, alignItems:'center', justifyContent:'center'}}
+                                style={{backgroundColor:COLORS2.mainMenu.menuTab.rightPart.button_bg, flex:1, borderRadius:0, margin:5, alignItems:'center', justifyContent:'center'}}
                             >
 
                                 {(()=>{ let fontSize // for fontsize resize if 'any'
@@ -72,7 +72,7 @@ class MenuTab extends React.Component {
                         </View>
                         <View style={{flex:1}}>
                             <TouchableOpacity onPress={this.props.onOptionsButton2}
-                                style={{backgroundColor:COLORS2.mainMenu.menuTab.rightPart.button_bg, flex:1, borderRadius:10, margin:5, alignItems:'center', justifyContent:'center'}}
+                                style={{backgroundColor:COLORS2.mainMenu.menuTab.rightPart.button_bg, flex:1, borderRadius:0, margin:5, alignItems:'center', justifyContent:'center'}}
                             >
                                 
                                 {(()=>{ let fontSize // for fontsize resize if 'any'
@@ -117,13 +117,13 @@ const styles = StyleSheet.create({
     },
     left: {
         flex: 2,
-        marginLeft: 5,
+        marginLeft: 8,
         marginRight: 0
     },
     right: {
         flex: 1,
-        marginLeft: 15,
-        marginRight: 5
+        marginLeft: 3,
+        marginRight: 8
     }
 })
 

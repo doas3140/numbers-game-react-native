@@ -27,7 +27,7 @@ class FindingGameIndicator extends React.Component {
         emit_cancel_find(this.props.username)
         setTimeout(()=>{
             this.props.navigator.dismissModal()
-        },100)
+        },10)
     }
 
     showReadyModal = ()=>{

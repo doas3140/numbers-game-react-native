@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppRegistry, StyleSheet, FlatList, Text, View, Animated, Image, Easing, TouchableHighlight, Dimensions, TouchableOpacity, Button, ScrollView } from 'react-native';
+import { Alert, AppRegistry, StyleSheet, FlatList, Text, View, Animated, Image, Easing, TouchableHighlight, Dimensions, TouchableOpacity, Button, ScrollView } from 'react-native';
 import Cube from '../components/Cube'
 import Row from '../components/Row'
 import TimerCountdown from '../components/TimerCountdown'
@@ -126,7 +126,7 @@ class MultiplayerScreen extends React.Component {
         })
     }
 
-    endGame = (username)=>{
+    endGame = (username,headerText)=>{
         // kill top row
         this.interpolatedValue1 = -300
         this.setState({})
@@ -134,6 +134,7 @@ class MultiplayerScreen extends React.Component {
         this.props.navigator.showLightBox({
             screen:'EndGame',
             passProps: {
+                headerText: headerText,
                 turn: this.state.turn-1,
                 username: username
             }
@@ -170,9 +171,9 @@ class MultiplayerScreen extends React.Component {
             this.GOAL_NR = this.state.history[0].numbers
             this.GAME_OVER = true
             if(this.state.currentPlayer=='Server'){
-                this.endGame(this.USERNAME)
+                this.endGame(this.USERNAME,'YOU WON')
             } else {
-                this.endGame(this.state.currentPlayer)
+                this.endGame(this.state.currentPlayer,'YOU LOST')
             }
         }
     }
@@ -182,7 +183,6 @@ class MultiplayerScreen extends React.Component {
         new_numbers = this.state.topRow.numbers.slice()
 
         this.state.history.unshift({key:new_row.key, hints:new_row.hints, numbers:new_numbers})
-        console.log('Test: ', this.state.topRow === this.state.history[0])
         this.state.topRow.key += 1
         this.setState({
             button: true,
@@ -229,10 +229,19 @@ class MultiplayerScreen extends React.Component {
     }
 
     exit = ()=>{
-        this.props.navigator.pop({
-            animated: true,
-            animationType: 'fade'
-        })
+        Alert.alert(
+            'Are you sure you want to leave?',
+            '',
+            [
+                {text:'No', onPress: ()=>{}, style:'cancel'},
+                {text:'Yes', onPress: ()=>{
+                    this.props.navigator.pop({
+                        animated: true,
+                        animationType: 'fade'
+                    })
+                }}
+            ]
+        )
     }
 
     onTimeIsUp = ()=>{
@@ -301,7 +310,7 @@ class MultiplayerScreen extends React.Component {
                             { translateY: this.interpolatedValue1 }
                         ]
                     }}>
-                        <Row index={0} row={this.state.topRow} button={this.state.button} onButtonPress={this.onButtonPress} onNumberPressCallback={this.onNumberPressCallback} onNumberLongPressCallback={this.onNumberLongPressCallback} />
+                        <Row index={0} row={this.state.topRow} button={this.state.button} onButtonPress={this.onButtonPress} newStyleLeft={{backgroundColor:COLORS2.game.multiplayerGame.top_row_bg}} newStyleRight={{backgroundColor:COLORS2.game.multiplayerGame.top_row_bg}} onNumberPressCallback={this.onNumberPressCallback} onNumberLongPressCallback={this.onNumberLongPressCallback} />
                     </Animated.View>
 
                     { (()=>{
@@ -329,6 +338,7 @@ class MultiplayerScreen extends React.Component {
 
                         <FlatList styles={styles.history}
                                 //scrollEnabled = {false}
+                                getItemLayout = {(data,index)=>{return {length:CONST.CUBE_SIZE,index,offset:CONST.CUBE_SIZE*index}}}
                                 data = {this.state.history}
                                 extraData = {this.state}
                                 renderItem = {({item})=>{

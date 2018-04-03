@@ -37,5 +37,4 @@ export const on = (socket_name, callback)=>{
 
 export const off = (socket_name)=>{
     socket.off(socket_name)
-    console.log('not listening to: ', socket_name)
 }

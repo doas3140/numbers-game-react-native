@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Button, TouchableOpacity, Animated, Easing, TextInput, Keyboard } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { CONST, COLORS, FONTS, width, height, COLORS2 } from '../utils/constants'
+import { CONST, COLORS, FONTS, width, height, COLORS2, SIZES } from '../utils/constants'
 import { createAnimation } from '../utils/animations'
 
 class EndGameModal extends React.Component {
@@ -19,15 +19,15 @@ class EndGameModal extends React.Component {
     }
 
     interVal1 = this.state.animVal1.interpolate({ inputRange: [0,1],
-        outputRange: [0, 200] }) // starts at -100
+        outputRange: [0, -SIZES.endGame.ggText.start + SIZES.endGame.ggText.finish] }) // starts at -100
     interVal2 = this.state.animVal2.interpolate({ inputRange: [0,1],
-        outputRange: [0, 300] }) // starts at -100
+        outputRange: [0, -SIZES.endGame.turnText.start + SIZES.endGame.turnText.finish] }) // starts at -100
     interVal3 = this.state.animVal3.interpolate({ inputRange: [0,1],
-        outputRange: [0, 300] }) // starts at -100
+        outputRange: [0, SIZES.endGame.btn1.offset] }) // starts at -100
     interVal4 = this.state.animVal4.interpolate({ inputRange: [0,1],
-        outputRange: [0, -300] }) // starts at -100
+        outputRange: [0, -SIZES.endGame.btn1.offset] }) // starts at -100
     interVal5 = this.state.animVal5.interpolate({ inputRange: [0,1],
-        outputRange: [0, 500] }) // starts at -100
+        outputRange: [0, -SIZES.endGame.usernameText.start + SIZES.endGame.usernameText.finish] }) // starts at -100
 
     componentDidMount(){
         // First animation
@@ -37,10 +37,10 @@ class EndGameModal extends React.Component {
         this.state.animVal4.setValue(0)
         this.state.animVal5.setValue(0)
         
-        anim1 = createAnimation(Value=this.state.animVal1, duration=1000, easing=Easing.bounce, delay=500)
+        anim1 = createAnimation(Value=this.state.animVal1, duration=700, easing=Easing.bounce, delay=500)
         anim2 = createAnimation(Value=this.state.animVal2, duration=300, easing=Easing.ease)
-        anim3 = createAnimation(Value=this.state.animVal3, duration=700, easing=Easing.bounce)
-        anim4 = createAnimation(Value=this.state.animVal4, duration=700, easing=Easing.bounce)
+        anim3 = createAnimation(Value=this.state.animVal3, duration=300, easing=Easing.ease)
+        anim4 = createAnimation(Value=this.state.animVal4, duration=200, easing=Easing.ease)
         anim5 = createAnimation(Value=this.state.animVal5, duration=300, easing=Easing.ease)
         
         Animated.sequence([anim1,anim2,anim5,anim3,anim4]).start()
@@ -65,7 +65,7 @@ class EndGameModal extends React.Component {
                 </Animated.Text>
 
                 <Animated.Text style={[styles.turnText,{
-                    transform: [ { translateX: this.interVal2 } ]
+                    transform: [ { translateY: this.interVal2 } ]
                 }]}>
                     TURNS: {this.props.turn}
                 </Animated.Text>
@@ -74,7 +74,7 @@ class EndGameModal extends React.Component {
                     if(this.props.username){
                         return (
                             <Animated.Text style={[styles.usernameText,{
-                                transform: [ { translateX: this.interVal5 } ]
+                                transform: [ { translateY: this.interVal5 } ]
                             }]}>
                                 {this.props.username} WON
                             </Animated.Text>
@@ -113,10 +113,10 @@ const styles = StyleSheet.create({
     },
     btn1: {
         position: 'absolute',
-        top: 300,
-        left: width/2 - 80 - 20 - 300, // first nr - width, second - marginRight, third - offset
-        height: 60,
-        width: 80,
+        top: SIZES.endGame.btn1.top,
+        left: width/2 - SIZES.endGame.btn1.size - SIZES.endGame.btn1.margin - SIZES.endGame.btn1.offset, // first_nr - width, second - marginRight, third - offset
+        height: SIZES.endGame.btn1.size,
+        width: SIZES.endGame.btn1.size,
         backgroundColor: COLORS2.endGame.button1_bg,
         alignItems: 'center',
         justifyContent: 'center',
@@ -124,10 +124,10 @@ const styles = StyleSheet.create({
     },
     btn2: {
         position: 'absolute',
-        top: 300,
-        right: width/2 - 80 - 20 - 300, // first nr - width, second - marginLeft, third - offset
-        height: 60,
-        width: 80,
+        top: SIZES.endGame.btn1.top,
+        right: width/2 - SIZES.endGame.btn1.size - SIZES.endGame.btn1.margin - SIZES.endGame.btn1.offset, // first nr - width, second - marginLeft, third - offset
+        height: SIZES.endGame.btn1.size,
+        width: SIZES.endGame.btn1.size,
         backgroundColor: COLORS2.endGame.button2_bg,
         alignItems: 'center',
         justifyContent: 'center',
@@ -135,24 +135,21 @@ const styles = StyleSheet.create({
     },
     ggText: {
         position: 'absolute',
-        top: -100,
+        top: SIZES.endGame.ggText.start,
         color: COLORS2.endGame.header_text,
         fontFamily: FONTS.family,
         fontSize: FONTS.endGame.header_text,
     },
     turnText: {
         position: 'absolute',
-        top: 230,
-        left: width/2 - 160/2 - 300, // first nr - width, second - offset
-        // left: -170,
+        top: SIZES.endGame.turnText.start,
         color: COLORS2.endGame.text,
         fontFamily: FONTS.family,
         fontSize: FONTS.endGame.turn_text,
     },
     usernameText: {
         position: 'absolute',
-        top: 175,
-        left: width/2 - 300/2 - 500, // first nr - width, second - offset
+        top: SIZES.endGame.usernameText.start,
         color: COLORS2.endGame.username_text,
         fontFamily: FONTS.family,
         fontSize: FONTS.endGame.username_text,

@@ -1,7 +1,24 @@
 // import React from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions, PixelRatio } from 'react-native'
 
 export const {width,height} = Dimensions.get('window')
+
+const SCALE = {
+    font:1,
+    size:1
+}
+if( 0 < width && width <= 350 ){
+    SCALE.font = 0.8,
+    SCALE.size = 0.8
+} else
+if( 350 < width && width <= 520 ){
+    SCALE.font = 1,
+    SCALE.size = 1
+} else 
+if( 520 < width && width <= 9999 ){
+    SCALE.font = 2,
+    SCALE.size = 2
+}
 
 export const CONST = {
     GAME_WINDOW_MARGIN: 30,
@@ -11,11 +28,146 @@ export const CONST = {
     CUBE_MARGIN: 4,
     CUBE_TEXT_SIZE: 35,
 
-    HINT_COLOR: '#ccb100',
-
     FIRST_ROW_APPEAR_DURATION: 1000,
     ROW_SLIDE_DOWN_DURATION: 300,
     READY_MODAL_LIFETIME: 10000
+}
+
+export const COLORS = {
+    bluegray: {
+        _50:'#ECEFF1',
+        _100:'#CFD8DC',
+        _200:'#B0BEC5',
+        _300:'#90A4AE',
+        _400:'#78909C',
+        _500:'#607D8B',
+        _600:'#546E7A',
+        _700:'#455A64',
+        _800:'#37474F',
+        _900:'#263238'
+    },
+    purple: {
+        _100:'#E1BEE7',
+        _500:'#9C27B0',
+        _700:'#7B1FA2',
+
+        _A100:'#EA80FC',
+        _A200:'#E040FB',
+        _A400:'#D500F9',
+        _A700:'#AA00FF'
+    },
+    amber: {
+        _100:'#FFECB3',
+        _500:'#FFC107',
+        _700:'#FFA000',
+
+        _A100:'#FFE57F',
+        _A200:'#FFD740',
+        _A400:'#FFC400',
+        _A700:'#FFAB00'
+    },
+    teal: {
+        _100:'#B2DFDB',
+        _500:'#009688',
+        _700:'#00796B'
+    },
+
+}
+
+export const PALETTE = {
+    primary_dark: COLORS.bluegray._700,
+    primary_main: COLORS.bluegray._500,
+    primary_light: COLORS.bluegray._100,
+    
+    accent_color: COLORS.amber._A200,
+
+    text_on_primary: '#FFFFFF'+'F0', // 240/255 %
+    primary_text: '#212121'+'CD', // 205/255 %
+}
+
+export const FONTS = {
+    family: 'JordanBoldGrunge',
+    mainMenu: {
+        logo_size:70*SCALE.font,
+        logo_text:35*SCALE.font,
+        header:30*SCALE.font,
+        button:30*SCALE.font,
+        icon1:40*SCALE.font,
+        icon2:40*SCALE.font,
+        nr_if_any:24*SCALE.font,
+        nr_else:30*SCALE.font,
+        icon_help:40*SCALE.font,
+        icon_settings:40*SCALE.font
+    },
+    row: {
+        cube_text: 32*SCALE.font,
+        icon_arrow_bottom: 65*SCALE.font
+    },
+    timer: {
+        text_size: 30*SCALE.font
+    }, 
+    game: {
+        multiplayerGame: {
+            icon_back:40*SCALE.font,
+            icon_turn:30*SCALE.font,
+            icon_timer:33*SCALE.font,
+            icon_timer_off:30*SCALE.font,
+            icon_help:35*SCALE.font,
+            turn_text:30*SCALE.font,
+            icon_bullseye:43*SCALE.font,
+            end_numbers_text:60*SCALE.font
+        },
+        singleplayerGame: {
+            icon_back:40*SCALE.font,
+            icon_turn:30*SCALE.font,
+            icon_timer:33*SCALE.font,
+            icon_timer_off:30*SCALE.font,
+            icon_help:35*SCALE.font,
+            turn_text:30*SCALE.font,
+            icon_bullseye:43*SCALE.font,
+            end_numbers_text:60*SCALE.font
+        },
+        waitingPlayer: {
+            text_size: 25*SCALE.font,
+            username_size: 27*SCALE.font,
+            circle_size: 'large' //large or small
+        }
+    },
+    endGame: {
+        icon1:50*SCALE.font,
+        icon2:50*SCALE.font,
+        header_text:60*SCALE.font,
+        turn_text:40*SCALE.font,
+        username_text:40*SCALE.font,
+    },
+    findingGame: {
+        text_size:24*SCALE.font,
+        circle_size: 'large'
+    },
+    help: {
+        icon_back:40*SCALE.font,
+        icon_forward:40*SCALE.font,
+        header:30*SCALE.font,
+        text_size:32*SCALE.font,
+        page1: {
+            line_height:43*SCALE.font
+        },
+        family: 'NanumPenScript'
+    },
+    readyModal: {
+        button_text:40*SCALE.font,
+        text_size:24*SCALE.font,
+        circle_size: 'large'
+    },
+    settings: {
+        icon_back:40*SCALE.font,
+        header:40*SCALE.font,
+        changeUsername: {
+            header:25*SCALE.font,
+            input_text:25*SCALE.font,
+            button_text:20*SCALE.font
+        }
+    }
 }
 
 export const SIZES = {
@@ -23,7 +175,7 @@ export const SIZES = {
         height: CONST.CUBE_SIZE - 2*CONST.CUBE_MARGIN,
         width: CONST.CUBE_SIZE - 2*CONST.CUBE_MARGIN,
         margin: CONST.CUBE_MARGIN,
-        borderRadius: 4
+        borderRadius: 4*SCALE.size
     },
     row: {
         button: {
@@ -42,36 +194,53 @@ export const SIZES = {
         width: width
     },
     endGame: {
-        // because of animations see EndGameModal.js
+        btn1:{
+            top:300*SCALE.size,
+            size:FONTS.endGame.icon1+20, //REQUIRES FONTS
+            margin:20*SCALE.size,
+            offset:300*SCALE.size
+        },
+        turnText: {
+            start:-100,
+            finish:230*SCALE.size
+        },
+        ggText: {
+            start:-100,
+            finish:100*SCALE.size
+        },
+        usernameText: {
+            start:-100,
+            finish:175*SCALE.size
+        }
     },
     findingGame: {
         modal: {
-            height: 80,
-            width: 260,
-            marginBottom: 100
+            height: 80*SCALE.size,
+            width: 260*SCALE.size,
+            marginBottom: 100*SCALE.size
         },
         header: {
-            height: 30,
-            width: 230
+            height: 30*SCALE.size,
+            width: 230*SCALE.size
         }
     },
     help: {
-        height: 500,
-        width: 320
+        height: 500*SCALE.size,
+        width: 320*SCALE.size
     },
     readyModal: {
         modal: {
-            height:140,
-            width:260,
-            marginBottom:100
+            height:140*SCALE.size,
+            width:260*SCALE.size,
+            marginBottom:100*SCALE.size
         },
         button: {
-            height:80,
-            width:200
+            height:80*SCALE.size,
+            width:200*SCALE.size
         },
         header: {
-            height:30,
-            width:230
+            height:30*SCALE.size,
+            width:230*SCALE.size
         }
     },
     selectNumber: {
@@ -79,218 +248,124 @@ export const SIZES = {
         width: CONST.CUBE_SIZE*3 + 10,
         padding: 5,
         borderRadius: 4
-    }
-}
-
-export const FONTS = {
-    family: 'JordanBoldGrunge',
-    mainMenu: {
-        logo_size:70,
-        logo_text:35,
-        header:30,
-        button:35,
-        icon1:40,
-        icon2:40,
-        nr_if_any:24,
-        nr_else:30,
-        icon_help:40,
-        icon_settings:40
-    },
-    row: {
-        cube_text: 35,
-        icon_arrow_bottom: 65
-    },
-    timer: {
-        text_size: 30
-    },
-    game: {
-        multiplayerGame: {
-            icon_back:40,
-            icon_turn:30,
-            icon_timer:33,
-            icon_timer_off:30,
-            icon_help:35,
-            turn_text:30,
-            icon_bullseye:43,
-            end_numbers_text:60
-        },
-        singleplayerGame: {
-            icon_back:40,
-            icon_turn:30,
-            icon_timer:33,
-            icon_timer_off:30,
-            icon_help:35,
-            turn_text:30,
-            icon_bullseye:43,
-            end_numbers_text:60
-        },
-        waitingPlayer: {
-            text_size: 25,
-            username_size: 27,
-            circle_size: 'large' //large or small
-        }
-    },
-    endGame: {
-        icon1:50,
-        icon2:50,
-        header_text:60,
-        turn_text:40,
-        username_text:40
-    },
-    findingGame: {
-        text_size:24,
-        circle_size: 'large'
-    },
-    help: {
-        icon_back:40,
-        icon_forward:40,
-        header:30,
-        text_size:32,
-        page1: {
-            line_height:43
-        },
-        family: 'NanumPenScript'
-    },
-    readyModal: {
-        button_text:40,
-        text_size:24,
-        circle_size: 'large'
     },
     settings: {
-        icon_back:40,
-        header:40,
-        changeUsername: {
-            header:25,
-            input_text:25,
-            button_text:20
+        modal: {
+            height:400*SCALE.size,
+            width:300*SCALE.size
+        },
+        menuItem: {
+            height:100*SCALE.size,
+            button_width:90*SCALE.size
         }
-    }
-}
-
-export const COLORS = {
-    bg: '#efebe9',
-    menuTitle: '#00bfa5',
-    c1: '#004d40',
-    c2: '#8bc34a',
-    c3: '#00bcd4',
-    fontDark: '#37474f',
-    fontGray: '#455a64',
-    button: '#ffd740',
-    settingsBg: '#f57f17',
-    helpBg: '#41545C',
-    header: 'purple',
-    game: {
-        bg: '#004d40',
-        gameWindow: '#efebe9',
-        numbersBg:  '#607d88',
-        hints: '#FB8C00',
-        button: '#ffd740'
     }
 }
 
 export const COLORS2 = {
     mainMenu: {
-        logo: COLORS.fontGray,
-        logo_text: COLORS.fontGray,
-        icon_help: COLORS.fontGray,
-        icon_settings: COLORS.fontGray,
-        background: COLORS.bg,
+        logo: PALETTE.primary_light,
+        logo_text: PALETTE.primary_light,
+        icon_help: PALETTE.text_on_primary,
+        icon_settings: PALETTE.text_on_primary,
+        background: PALETTE.primary_main,
         menuTab: {
-            row1_bg: COLORS.menuTitle,
-            row2_bg: COLORS.c1,
-            header_text: COLORS.fontDark,
-            button_bg: COLORS.button,
-            button_text: COLORS.fontGray,
+            row1_bg: PALETTE.primary_dark,
+            row2_bg: PALETTE.primary_dark,
+            header_text: PALETTE.text_on_primary,
+            button_bg: PALETTE.accent_color,
+            button_text: PALETTE.primary_text,
             rightPart: {
-                row1_bg: COLORS.c2,
-                row2_bg: COLORS.c3,
-                text: COLORS.fontGray,
-                icon: COLORS.fontGray,
-                button_bg: COLORS.button
+                row1_bg: PALETTE.primary_dark,
+                row2_bg: PALETTE.primary_dark,
+                text: PALETTE.primary_text,
+                icon: PALETTE.text_on_primary,
+                button_bg: PALETTE.accent_color
             }
         }
     },
     row: {
         leftPart: {
-            background: COLORS.game.numbersBg,
-            cube_text: COLORS.fontDark
+            background: PALETTE.primary_dark,
+            cube_text: PALETTE.primary_text
         },
         rightPart: {
-            background: COLORS.game.numbersBg,
-            button_bg: COLORS.game.button,
-            hint1_bg: COLORS.game.hints,
-            hint2_bg: COLORS.game.hints
+            background: PALETTE.primary_dark,
+            button_bg: PALETTE.accent_color,
+            hint1_bg: PALETTE.accent_color,
+            hint2_bg: PALETTE.accent_color
         }
     },
     timer: {
-        text: 'white'
+        text: PALETTE.text_on_primary
     },
     game: {
         singleplayerGame: {
-            background:COLORS.game.bg,
-            header_bg: COLORS.header,
-            turn_text: 'white',
-            game_window_bg: COLORS.game.gameWindow,
-            end_text: COLORS.game.gameWindow,
-            end_bg: COLORS.game.bg,
+            background: PALETTE.primary_main,
+            end_bg: PALETTE.primary_main,
+            header_bg: PALETTE.primary_dark,
+            top_row_bg: PALETTE.primary_dark,
+            turn_text: PALETTE.text_on_primary,
+            game_window_bg: PALETTE.primary_main,
+            end_text: PALETTE.accent_color,
 
-            icon_back:COLORS.game.gameWindow,
-            icon_turn:COLORS.game.gameWindow,
-            icon_timer:COLORS.game.gameWindow,
-            icon_timer_off:COLORS.game.gameWindow,
-            icon_help:COLORS.game.gameWindow,
-            icon_bullseye:COLORS.button,
+            icon_back:PALETTE.text_on_primary,
+            icon_turn:PALETTE.text_on_primary,
+            icon_timer:PALETTE.text_on_primary,
+            icon_timer_off:PALETTE.text_on_primary,
+            icon_help:PALETTE.text_on_primary,
+            icon_bullseye:PALETTE.accent_color,
         },
         multiplayerGame: {
-            background:COLORS.game.bg,
-            header_bg: COLORS.header,
-            turn_text: 'white',
-            game_window_bg: COLORS.game.gameWindow,
-            end_text: COLORS.game.gameWindow,
-            end_bg: COLORS.game.bg,
+            background: PALETTE.primary_main,
+            end_bg: PALETTE.primary_main,
+            header_bg: PALETTE.primary_dark,
+            top_row_bg: PALETTE.primary_dark,
+            turn_text: PALETTE.text_on_primary,
+            game_window_bg: PALETTE.primary_main,
+            end_text: PALETTE.accent_color,
 
-            icon_back:COLORS.game.gameWindow,
-            icon_turn:COLORS.game.gameWindow,
-            icon_timer:COLORS.game.gameWindow,
-            icon_timer_off:COLORS.game.gameWindow,
-            icon_help:COLORS.game.gameWindow,
-            icon_bullseye:COLORS.button,
+            icon_back:PALETTE.text_on_primary,
+            icon_turn:PALETTE.text_on_primary,
+            icon_timer:PALETTE.text_on_primary,
+            icon_timer_off:PALETTE.text_on_primary,
+            icon_help:PALETTE.text_on_primary,
+            icon_bullseye:PALETTE.accent_color,
         },
         selectNumber: {
             // background: 'rgba(0,0,0,0.5)',
-            modal_bg: COLORS.helpBg,
-            empty_cube: COLORS.helpBg,
-            text: COLORS.fontDark
+            modal_bg: PALETTE.primary_dark,
+            empty_cube: PALETTE.primary_main,
+            text: PALETTE.primary_text
         },
         waitingPlayer: {
-            background: COLORS.header,
-            username_text: COLORS.button,
-            text: COLORS.game.gameWindow,
-            circle: '#ededed'
+            background: PALETTE.primary_dark,
+            username_text: PALETTE.accent_color,
+            text: PALETTE.text_on_primary,
+            circle: PALETTE.text_on_primary
         }
     },
     endGame: {
         background: 'rgba(0,0,0,0.7)',
-        button1_bg: COLORS.button,
-        button2_bg: COLORS.button,
-        header_text: COLORS.button,
-        text: COLORS.button,
-        username_text: COLORS.c3 
+        button1_bg: PALETTE.accent_color,
+        button2_bg: PALETTE.accent_color,
+        header_text: PALETTE.accent_color,
+        text: PALETTE.primary_light,
+        username_text: PALETTE.primary_light 
     },
     findingGame: {
         background: 'rgba(0,0,0,0.5)',
-        text: 'white',
-        circle: 'white',
-        modal_bg: COLORS.c1
+        text: PALETTE.text_on_primary,
+        circle: PALETTE.text_on_primary,
+        modal_bg: PALETTE.primary_main
     },
     help: {
         background: 'rgba(0,0,0,0.5)',
-        modal_bg: COLORS.helpBg,
-        icon_back: COLORS.bg,
-        icon_forward: COLORS.bg,
-        header_text: 'white',
-        header_bg: COLORS.header,
-        text: 'white',
+        modal_bg: PALETTE.primary_main,
+        icon_back: PALETTE.text_on_primary,
+        icon_forward: PALETTE.text_on_primary,
+        header_text: PALETTE.text_on_primary,
+        header_bg: PALETTE.primary_dark,
+        text: PALETTE.text_on_primary,
         page1: {
             subtext1: 'yellow',
             subtext2: 'orange',
@@ -299,24 +374,24 @@ export const COLORS2 = {
     },
     readyModal: {
         background: 'rgba(0,0,0,0.5)',
-        modal_bg: COLORS.c1,
-        button_bg: COLORS.button,
-        text: 'white',
-        circle: COLORS.c1
+        modal_bg: PALETTE.primary_main,
+        button_bg: PALETTE.accent_color,
+        text: PALETTE.text_on_primary,
+        circle: PALETTE.primary_text
     },
     settings: {
         // background: 'rgba(0,0,0,0.5)',
-        icon_back: COLORS.bg,
-        header_bg: COLORS.header,
-        header_text: 'white',
-        modal_bg: COLORS.settingsBg,
+        icon_back: PALETTE.text_on_primary,
+        header_bg: PALETTE.primary_dark,
+        header_text: PALETTE.text_on_primary,
+        modal_bg: PALETTE.primary_main,
         item: {
-            header_bg: COLORS.c1,
-            header_text: COLORS.bg,
-            body_bg: COLORS.button,
-            input_text: COLORS.fontDark,
-            button_bg: '#43a047',
-            button_text: COLORS.bg
+            header_bg: PALETTE.primary_dark,
+            header_text: PALETTE.text_on_primary,
+            body_bg: PALETTE.primary_light,
+            input_text: PALETTE.primary_text,
+            button_bg: PALETTE.accent_color,
+            button_text: PALETTE.primary_text
         }
     }
 }
@@ -351,143 +426,40 @@ export const nr2color_Light = (number)=>{
             return '#A1887F'
             break;
         default:
-            return 'white'
+            return '#D6CA9E'
     }
 }
 
 export const nr2color_Dark = (number)=>{
     switch(number){
         case 1:
-            return '#EF5350BF'
+            return '#EF5350CC'
             break;
         case 2:
-            return '#BA68C8BF'
+            return '#BA68C8CC'
             break;
         case 3:
-            return '#9575CDBF'
+            return '#9575CDCC'
             break;
         case 4:
-            return '#1E88E5BF'
+            return '#1E88E5CC'
             break;
         case 5:
-            return '#26A69ABF'
+            return '#26A69ACC'
             break;
         case 6:
-            return '#4CAF50BF'
+            return '#4CAF50CC'
             break;
         case 7:
-            return '#AFB42BBF'
+            return '#AFB42BCC'
             break;
         case 8:
-            return '#E65100BF'
+            return '#E65100CC'
             break;
         case 9:
-            return '#A1887FBF'
+            return '#A1887FCC'
             break;
         default:
-            return 'white'
+            return '#D6CA9ECC'
     }
 }
-
-// export const nr2color_Light = (number)=>{
-//     switch(number){
-//         case 1:
-//             return '#b62b6e'
-//             break;
-//         case 2:
-//             return '#9628c6'
-//             break;
-//         case 3:
-//             return '#4374b7'
-//             break;
-//         case 4:
-//             return '#abb8af'
-//             break;
-//         case 5:
-//             return '#98c807'
-//             break;
-//         case 6:
-//             return '#b1a24a'
-//             break;
-//         case 7:
-//             return '#00a78e'
-//             break;
-//         case 8:
-//             return '#ef9421'
-//             break;
-//         case 9:
-//             return '#d13814'
-//             break;
-//         default:
-//             return 'white'
-//     }
-// }
-
-// export const nr2color_Dark = (number)=>{
-//     switch(number){
-//         case 1:
-//             return '#4f2a3c'
-//             break;
-//         case 2:
-//             return '#553263'
-//             break;
-//         case 3:
-//             return '#333f4c'
-//             break;
-//         case 4:
-//             return '#334f3b'
-//             break;
-//         case 5:
-//             return '#45521b'
-//             break;
-//         case 6:
-//             return '#7f7436'
-//             break;
-//         case 7:
-//             return '#00826f'
-//             break;
-//         case 8:
-//             return '#755934'
-//             break;
-//         case 9:
-//             return '#663528'
-//             break;
-//         default:
-//             return 'white'
-//     }
-// }
-
-/////////////////////////////////////////////////
-// export const number2bgcolorDARK = (number)=>{
-//     switch(number){
-//         case 1:
-//             return '#361d29'
-//             break;
-//         case 2:
-//             return '#3c2346'
-//             break;
-//         case 3:
-//             return '#252d37'
-//             break;
-//         case 4:
-//             return '#24382a'
-//             break;
-//         case 5:
-//             return '#3d4818'
-//             break;
-//         case 6:
-//             return '#7e7335'
-//             break;
-//         case 7:
-//             return '#007463'
-//             break;
-//         case 8:
-//             return '#6f5431'
-//             break;
-//         case 9:
-//             return '#512a20'
-//             break;
-//         default:
-//             return 'white'
-//     }
-// }

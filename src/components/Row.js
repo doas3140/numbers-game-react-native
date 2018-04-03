@@ -79,10 +79,10 @@ class Row extends React.Component {
     render(){
         return (
             <View style={styles.row}>
-                <View style={[styles.leftSide,{flex:this.props.numbersLength}]}>
+                <View style={[styles.leftSide,{flex:this.props.numbersLength},this.props.newStyleLeft]}>
                     { this.getNumbers() }
                 </View>
-                <View style={styles.rightSide}>
+                <View style={[styles.rightSide,this.props.newStyleRight]}>
                     { this.getRightSide() }
                 </View>
             </View>

@@ -29,7 +29,6 @@ class ReadyModal extends React.Component {
     }
 
     notInTime = ()=>{
-        console.log('NOT IN TIME : READY')
         this.props.navigator.dismissModal()
     }
 

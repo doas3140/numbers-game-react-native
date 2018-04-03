@@ -10,6 +10,7 @@ class HelpModal extends React.Component {
     static navigatorStyle = {
         navBarHidden: true
     }
+    totalPages = 2
 
     state = {
         pageNumber:1
@@ -30,6 +31,19 @@ class HelpModal extends React.Component {
         }
     }
 
+    getHeader = (pageNumber)=>{
+        switch(pageNumber){
+            case 1:
+                return 'introduction'
+                break
+            case 2:
+                return 'how to play'
+                break
+            default:
+                return ''
+        }
+    }
+
     render(){
         return (
             <View style={styles.container}>
@@ -41,12 +55,20 @@ class HelpModal extends React.Component {
                         </TouchableOpacity>
                         <View style={[{flex:4},styles.center]}>
                             <Text style={{color:COLORS2.help.header_text,fontFamily:FONTS.family,fontSize:FONTS.help.header}}>
-                                how to play
+                                { this.getHeader(this.state.pageNumber) }
                             </Text>
                         </View>
-                        <TouchableOpacity onPress={this.onRightPress} style={{flex:1}}>
-                            <Icon name='arrow-forward' size={FONTS.help.icon_forward} color={COLORS2.help.icon_forward} style={{marginRight:0, marginLeft:0}} />
-                        </TouchableOpacity>
+                        {(()=>{
+                            if(this.state.pageNumber == this.totalPages){
+                                return <View style={{flex:1}}/>
+                            } else {
+                                return (
+                                    <TouchableOpacity onPress={this.onRightPress} style={{flex:1}}>
+                                        <Icon name='arrow-forward' size={FONTS.help.icon_forward} color={COLORS2.help.icon_forward} style={{marginRight:0, marginLeft:0}} />
+                                    </TouchableOpacity>
+                                )
+                            }
+                        })()}
                     </View>
 
                     <View style={styles.body}>
