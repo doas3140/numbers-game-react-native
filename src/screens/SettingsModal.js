@@ -14,7 +14,7 @@ class SettingsModal extends React.Component {
     }
 
     onExitPress = ()=>{
-        this.props.navigator.dismissLightBox()
+        this.props.navigator.dismissModal({animationType: 'none'})
     }
 
     onButtonPress = ()=>{
@@ -77,7 +77,7 @@ class SettingsModal extends React.Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-    //   backgroundColor: COLORS2.settings.background,
+      backgroundColor: COLORS2.settings.background,
       alignItems: 'center',
       justifyContent: 'center',
     },

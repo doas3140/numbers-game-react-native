@@ -47,12 +47,12 @@ class EndGameModal extends React.Component {
     }
 
     exit = ()=>{
+        this.props.navigator.dismissModal({animationType: 'none'})
         this.props.navigator.pop()
-        this.props.navigator.dismissLightBox()
     }
 
     close = ()=>{
-        this.props.navigator.dismissLightBox()
+        this.props.navigator.dismissModal({animationType: 'none'})
     }
 
     render(){

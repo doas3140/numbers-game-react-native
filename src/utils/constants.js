@@ -332,7 +332,7 @@ export const COLORS2 = {
             icon_bullseye:PALETTE.accent_color,
         },
         selectNumber: {
-            // background: 'rgba(0,0,0,0.5)',
+            background: 'rgba(0,0,0,0.5)',
             modal_bg: PALETTE.primary_dark,
             empty_cube: PALETTE.primary_main,
             text: PALETTE.primary_text
@@ -380,7 +380,7 @@ export const COLORS2 = {
         circle: PALETTE.primary_text
     },
     settings: {
-        // background: 'rgba(0,0,0,0.5)',
+        background: 'rgba(0,0,0,0.5)',
         icon_back: PALETTE.text_on_primary,
         header_bg: PALETTE.primary_dark,
         header_text: PALETTE.text_on_primary,

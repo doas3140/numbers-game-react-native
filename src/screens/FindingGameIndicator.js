@@ -12,7 +12,7 @@ class FindingGameIndicator extends React.Component {
     componentDidMount(){
         emit_find_game(this.props.username,this.props.user_count)
         on('room_was_created',()=>{
-            this.props.navigator.dismissModal()
+            this.props.navigator.dismissModal({animationType: 'none'})
             setTimeout(()=>{
                 this.showReadyModal()
             },500)
@@ -26,7 +26,7 @@ class FindingGameIndicator extends React.Component {
     forceClose = ()=>{
         emit_cancel_find(this.props.username)
         setTimeout(()=>{
-            this.props.navigator.dismissModal()
+            this.props.navigator.dismissModal({animationType: 'none'})
         },10)
     }
 
@@ -37,7 +37,8 @@ class FindingGameIndicator extends React.Component {
                 startGame: this.multiplayer_startGame,
                 username: this.props.username,
                 startGame: this.props.startGame,
-            }
+            },
+            animationType: 'none'
         })
     }
 

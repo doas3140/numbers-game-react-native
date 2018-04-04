@@ -12,7 +12,7 @@ class SelectNumberModal extends React.Component {
     }
 
     onNumberPress = (new_number)=>{
-        this.props.navigator.dismissLightBox()
+        this.props.navigator.dismissModal({animationType: 'none'})
         this.props.changeNumber(this.props.index,new_number)
     }
 
@@ -154,7 +154,7 @@ class SelectNumberModal extends React.Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-    //   backgroundColor: COLORS2.game.selectNumber.background,
+      backgroundColor: COLORS2.game.selectNumber.background,
       alignItems: 'center',
       justifyContent: 'center',
     },

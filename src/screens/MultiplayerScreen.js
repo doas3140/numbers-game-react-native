@@ -131,13 +131,14 @@ class MultiplayerScreen extends React.Component {
         this.interpolatedValue1 = -300
         this.setState({})
         // show end game screen
-        this.props.navigator.showLightBox({
+        this.props.navigator.showModal({
             screen:'EndGame',
             passProps: {
                 headerText: headerText,
                 turn: this.state.turn-1,
                 username: username
-            }
+            },
+            animationType: 'none'
         })
     }
 
@@ -160,7 +161,7 @@ class MultiplayerScreen extends React.Component {
     animate = (callback)=>{
             this.state.animatedValueIncrease.setValue(0)
             
-            animation = createAnimation(Value=this.state.animatedValueIncrease, duration=CONST.ROW_SLIDE_DOWN_DURATION, easing=Easing.bounce, delay=0)
+            animation = createAnimation(Value=this.state.animatedValueIncrease, duration=CONST.ROW_SLIDE_DOWN_DURATION, easing=Easing.ease, delay=0)
             animation.start(()=>{
                 callback()
             })
@@ -208,16 +209,14 @@ class MultiplayerScreen extends React.Component {
     }
 
     onNumberLongPressCallback = (nr_index)=>{
-        this.props.navigator.showLightBox({
+        this.props.navigator.showModal({
             screen:'SelectNumber',
             passProps: {
                 index: nr_index,
                 numbers: this.state.topRow.numbers.slice(),
                 changeNumber: this.changeNumber
             },
-            style: {
-                backgroundBlur: 'dark'
-            }
+            animationType: 'none'
         })
     }
 
@@ -250,7 +249,8 @@ class MultiplayerScreen extends React.Component {
 
     showHelp = ()=>{
         this.props.navigator.showModal({
-            screen: 'Help'
+            screen: 'Help',
+            animationType: 'none'
         })
     }
 

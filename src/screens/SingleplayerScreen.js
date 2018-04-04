@@ -135,12 +135,13 @@ class SingleplayerScreen extends React.Component {
         this.interpolatedValue1 = -300
         this.setState({})
         // show end game screen
-        this.props.navigator.showLightBox({
+        this.props.navigator.showModal({
             screen:'EndGame',
             passProps: {
                 headerText: text,
                 turn: this.state.turn-1
-            }
+            },
+            animationType: 'none'
         })
     }
 
@@ -177,16 +178,14 @@ class SingleplayerScreen extends React.Component {
     }
 
     onNumberLongPressCallback = (nr_index)=>{
-        this.props.navigator.showLightBox({
+        this.props.navigator.showModal({
             screen:'SelectNumber',
             passProps: {
                 index: nr_index,
                 numbers: this.state.topRow.numbers.slice(),
                 changeNumber: this.changeNumber
             },
-            style: {
-                backgroundBlur: 'dark'
-            }
+            animationType: 'none'
         })
     }
 
@@ -220,7 +219,8 @@ class SingleplayerScreen extends React.Component {
 
     showHelp = ()=>{
         this.props.navigator.showModal({
-            screen: 'Help'
+            screen: 'Help',
+            animationType: 'none'
         })
     }
 

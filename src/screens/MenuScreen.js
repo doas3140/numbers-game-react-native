@@ -29,7 +29,7 @@ class MenuScreen extends React.Component {
         sp_timer: '-',
         sp_userCount: 1,
         mp_rowLength: 4,
-        mp_timer: 60,
+        mp_timer: 20,
         mp_userCount: 2
     }
     USERNAME = 'user'+Math.ceil(Math.random()*9)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)
@@ -75,21 +75,20 @@ class MenuScreen extends React.Component {
 
     // Moving to Other Screens
     onSettingsPress = ()=>{
-        this.props.navigator.showLightBox({
+        this.props.navigator.showModal({
             screen:'Settings',
             passProps: {
                 username: this.USERNAME,
                 changeUsername: this.changeUsername
             },
-            style:{
-                backgroundBlur: 'dark'
-            }
+            animationType: 'none'
         })
     }
 
     onHelpPress = ()=>{
         this.props.navigator.showModal({
-            screen: 'Help'
+            screen: 'Help',
+            animationType: 'none'
         })
     }
 
@@ -120,7 +119,8 @@ class MenuScreen extends React.Component {
                 username: this.USERNAME,
                 user_count: this.state.mp_userCount,
                 startGame: this.multiplayer_startGame   
-            }
+            },
+            animationType: 'none'
         })
     }
 

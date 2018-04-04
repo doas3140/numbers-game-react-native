@@ -18,7 +18,7 @@ class HelpModal extends React.Component {
 
     onLeftPress = ()=>{
         if(this.state.pageNumber==1){
-            this.props.navigator.dismissModal()
+            this.props.navigator.dismissModal({animationType: 'none'})
         } else 
         if(this.state.pageNumber==2){
             this.setState({pageNumber:1})

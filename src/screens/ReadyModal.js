@@ -19,7 +19,7 @@ class ReadyModal extends React.Component {
         }, CONST.READY_MODAL_LIFETIME)
 
         on('start_game',()=>{
-            this.props.navigator.dismissModal()
+            this.props.navigator.dismissModal({animationType: 'none'})
             this.props.startGame()
         })
     }
@@ -29,7 +29,7 @@ class ReadyModal extends React.Component {
     }
 
     notInTime = ()=>{
-        this.props.navigator.dismissModal()
+        this.props.navigator.dismissModal({animationType: 'none'})
     }
 
     onReadyPress = ()=>{

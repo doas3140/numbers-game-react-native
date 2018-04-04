@@ -21,13 +21,12 @@ Navigation.registerComponent('FindingGame', ()=>FindingGameIndicator)
 Navigation.registerComponent('Help', ()=>HelpModal)
 Navigation.registerComponent('SelectNumber', ()=>SelectNumberModal)
 
-// Start app
+  // Start app
 Navigation.startSingleScreenApp({
   screen: {
     screen: 'Menu'
   },
   appStyle: {
     orientation: 'portrait'
-  },
-  animationType:'slide-down'
+  }
 })
