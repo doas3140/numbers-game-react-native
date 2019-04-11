@@ -39,7 +39,6 @@ class MenuScreen extends React.Component {
         // load username from db
         try {
             AsyncStorage.getItem('@numbers_game:username',(e,username)=>{
-                console.log(e)
                 if (username != null){
                     this.USERNAME = username
                 }

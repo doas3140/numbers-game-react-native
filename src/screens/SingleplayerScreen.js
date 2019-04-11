@@ -113,7 +113,6 @@ class SingleplayerScreen extends React.Component {
     }
 
     checkForEndGame = (hints)=>{
-        console.log(this.state.history)
         if(hints[1] == this.props.numbersLength){
             this.GAME_OVER = true
             this.setState({})
